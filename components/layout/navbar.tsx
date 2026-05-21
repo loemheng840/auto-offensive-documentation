@@ -573,7 +573,17 @@ export function Header() {
 
                             {/* ── Resources ── */}
                             <NavigationMenuItem className="flex items-center">
-                                <DesktopNavLink href="/" label={t('resources')} />
+                                <NavigationMenuLink asChild>
+                                    <a
+                                        href={getMainHostUrl('/resource')}
+                                        className={cn(
+                                            navigationMenuTriggerStyle(),
+                                            'bg-transparent hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-active:bg-transparent data-active:text-primary text-foreground font-semibold'
+                                        )}
+                                    >
+                                        {t('resources')}
+                                    </a>
+                                </NavigationMenuLink>
                                 <NavigationMenuTrigger
                                     aria-label={`${t('resources')} menu`}
                                     className="h-9 rounded-md bg-transparent px-2 hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary text-foreground"
@@ -687,6 +697,13 @@ export function Header() {
                     {/* Resources */}
                     <div className="mt-2 flex items-center justify-between">
                         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Resources</p>
+                        <a
+                            href={getMainHostUrl('/resource')}
+                            onClick={() => setOpen(false)}
+                            className="text-xs font-medium text-primary"
+                        >
+                            {isKhmer ? 'បើកទំព័រ' : 'Open page'}
+                        </a>
                     </div>
                     <div className="grid grid-cols-1 gap-0.5">
                         {resourceDocLinks.map((link, i) => (
