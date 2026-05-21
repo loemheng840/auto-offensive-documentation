@@ -154,14 +154,14 @@ export default function ScanningContent() {
                         icon={<Zap />}
                         badge="Mode 1"
                         name={isKhmer ? "Basic" : "Basic"}
-                        summary={isKhmer ? "Tool តែមួយជាមួយ default options។ លឿន និងសាមញ្ញ។" : "Single tool with default options. Fast and simple."}
+                        summary={isKhmer ? "Tool តែមួយជាមួយ default options។ លឿន និងសាមញ្ញ។" : "Single tool with Light and Deep options. Fast and simple."}
                         useCase={isKhmer ? "ការត្រួតពិនិត្យលឿន, កិច្ចការ ad-hoc, ការសាកល្បង" : "Quick checks, ad-hoc tasks, exploration"}
                     />
                     <ModeCard
                         icon={<SlidersHorizontal />}
                         badge="Mode 2"
                         name={isKhmer ? "Medium" : "Medium"}
-                        summary={isKhmer ? "Tool តែមួយជាមួយ admin-validated options ។" : "Single tool with admin-validated options."}
+                        summary={isKhmer ? "Tool តែមួយជាមួយ admin-validated options ។" : " Multi-tools with admin-validated options."}
                         useCase={isKhmer ? "Custom configurations ដែលត្រូវការ tuning" : "Custom configurations that need tuning"}
                     />
                     <ModeCard
@@ -188,12 +188,12 @@ export default function ScanningContent() {
                                 <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 font-semibold">Basic</td>
                                 <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10"><InlineCode>POST /scans/basic/submit</InlineCode></td>
                                 <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">1</td>
-                                <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">{isKhmer ? "Defaults" : "Defaults only"}</td>
+                                <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">{isKhmer ? "Defaults" : "Light and Deep"}</td>
                             </tr>
                             <tr className="hover:bg-[#FAF8F2] dark:hover:bg-white/5">
                                 <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 font-semibold">Medium</td>
                                 <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10"><InlineCode>POST /scans/medium/submit</InlineCode></td>
-                                <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">1</td>
+                                <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">Multiple</td>
                                 <td className="px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">{isKhmer ? "Schema-validated" : "Schema-validated"}</td>
                             </tr>
                             <tr className="hover:bg-[#FAF8F2] dark:hover:bg-white/5">

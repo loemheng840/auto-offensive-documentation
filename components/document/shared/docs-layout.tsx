@@ -28,12 +28,324 @@ export interface TocItem {
 }
 
 interface DocsLayoutProps {
-    /** The section IDs on this page — used to drive the right-sidebar TOC highlight */
-    sectionIds: string[];
-    /** The TOC items shown in the right sidebar */
-    toc: TocItem[];
     children: React.ReactNode;
 }
+
+/* ─────────────────────────────────────────────
+   Per-route TOC + section registry
+   Keyed by pathname (without basePath)
+───────────────────────────────────────────── */
+interface RouteData {
+    sectionIds: string[];
+    tocEn: TocItem[];
+    tocKh: TocItem[];
+}
+
+const ROUTE_DATA: Record<string, RouteData> = {
+    "/getting-started": {
+        sectionIds: ["what-is-aof", "core-concepts", "install", "first-scan", "view-results", "next-steps"],
+        tocEn: [
+            { id: "what-is-aof", labelEn: "What is Auto-Offensive?" },
+            { id: "core-concepts", labelEn: "Core Concepts" },
+            { id: "install", labelEn: "Install the CLI" },
+            { id: "first-scan", labelEn: "Run your first scan" },
+            { id: "view-results", labelEn: "View results" },
+            { id: "next-steps", labelEn: "Next steps" },
+        ],
+        tocKh: [
+            { id: "what-is-aof", labelEn: "What is Auto-Offensive?", labelKh: "Auto-Offensive ជាអ្វី?" },
+            { id: "core-concepts", labelEn: "Core Concepts", labelKh: "គោលគំនិតស្នូល" },
+            { id: "install", labelEn: "Install the CLI", labelKh: "ដំឡើង CLI" },
+            { id: "first-scan", labelEn: "Run your first scan", labelKh: "ដំណើរការ scan ដំបូង" },
+            { id: "view-results", labelEn: "View results", labelKh: "មើលលទ្ធផល" },
+            { id: "next-steps", labelEn: "Next steps", labelKh: "ជំហានបន្ទាប់" },
+        ],
+    },
+    "/scanning": {
+        sectionIds: ["overview", "basic-scan", "medium-scan", "advanced-scan", "tools", "queue", "streaming"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "basic-scan", labelEn: "Basic scan" },
+            { id: "medium-scan", labelEn: "Medium scan" },
+            { id: "advanced-scan", labelEn: "Advanced pipeline scan" },
+            { id: "tools", labelEn: "Supported tools" },
+            { id: "queue", labelEn: "Queue & lifecycle" },
+            { id: "streaming", labelEn: "Real-time streaming" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "Overview", labelKh: "ទិដ្ឋភាពទូទៅ" },
+            { id: "basic-scan", labelEn: "Basic scan", labelKh: "Basic scan" },
+            { id: "medium-scan", labelEn: "Medium scan", labelKh: "Medium scan" },
+            { id: "advanced-scan", labelEn: "Advanced pipeline scan", labelKh: "Advanced pipeline scan" },
+            { id: "tools", labelEn: "Supported tools", labelKh: "Tools ដែលគាំទ្រ" },
+            { id: "queue", labelEn: "Queue & lifecycle", labelKh: "Queue និង lifecycle" },
+            { id: "streaming", labelEn: "Real-time streaming", labelKh: "Real-time streaming" },
+        ],
+    },
+    "/ai-analysis": {
+        sectionIds: ["overview", "modes", "next-steps", "deep-analysis", "mcp-tools", "models-cost", "feedback"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "modes", labelEn: "Suggestion modes" },
+            { id: "next-steps", labelEn: "Next steps mode" },
+            { id: "deep-analysis", labelEn: "Deep analysis mode" },
+            { id: "mcp-tools", labelEn: "MCP tools" },
+            { id: "models-cost", labelEn: "Models & cost" },
+            { id: "feedback", labelEn: "Feedback loop" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "Overview", labelKh: "ទិដ្ឋភាពទូទៅ" },
+            { id: "modes", labelEn: "Suggestion modes", labelKh: "Modes" },
+            { id: "next-steps", labelEn: "Next steps mode", labelKh: "Next steps mode" },
+            { id: "deep-analysis", labelEn: "Deep analysis mode", labelKh: "Deep analysis mode" },
+            { id: "mcp-tools", labelEn: "MCP tools", labelKh: "MCP tools" },
+            { id: "models-cost", labelEn: "Models & cost", labelKh: "Models និងតម្លៃ" },
+            { id: "feedback", labelEn: "Feedback loop", labelKh: "Feedback loop" },
+        ],
+    },
+    "/code-scanning": {
+        sectionIds: ["overview", "git-integration", "trigger-scan", "issues", "hotspots", "dependencies", "quality-gates"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "git-integration", labelEn: "Git integration" },
+            { id: "trigger-scan", labelEn: "Trigger a code scan" },
+            { id: "issues", labelEn: "Issues & severity" },
+            { id: "hotspots", labelEn: "Security hotspots" },
+            { id: "dependencies", labelEn: "Dependency vulns" },
+            { id: "quality-gates", labelEn: "Quality gates" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "Overview", labelKh: "ទិដ្ឋភាពទូទៅ" },
+            { id: "git-integration", labelEn: "Git integration", labelKh: "Git integration" },
+            { id: "trigger-scan", labelEn: "Trigger a code scan", labelKh: "បើក code scan" },
+            { id: "issues", labelEn: "Issues & severity", labelKh: "Issues និង severity" },
+            { id: "hotspots", labelEn: "Security hotspots", labelKh: "Security hotspots" },
+            { id: "dependencies", labelEn: "Dependency vulns", labelKh: "Dependency vulnerabilities" },
+            { id: "quality-gates", labelEn: "Quality gates", labelKh: "Quality gates" },
+        ],
+    },
+    "/reports": {
+        sectionIds: ["overview", "generate", "formats", "templates", "scope", "manage"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "generate", labelEn: "Generate a report" },
+            { id: "formats", labelEn: "Export formats" },
+            { id: "templates", labelEn: "Templates & branding" },
+            { id: "scope", labelEn: "Scope & filtering" },
+            { id: "manage", labelEn: "Manage reports" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "Overview", labelKh: "ទិដ្ឋភាពទូទៅ" },
+            { id: "generate", labelEn: "Generate a report", labelKh: "បង្កើត report" },
+            { id: "formats", labelEn: "Export formats", labelKh: "Export formats" },
+            { id: "templates", labelEn: "Templates & branding", labelKh: "Templates និង branding" },
+            { id: "scope", labelEn: "Scope & filtering", labelKh: "Scope និង filtering" },
+            { id: "manage", labelEn: "Manage reports", labelKh: "គ្រប់គ្រង reports" },
+        ],
+    },
+    "/dashboard": {
+        sectionIds: ["overview", "metrics", "vulnerability-trends", "asset-discovery", "risk-scoring", "top-charts"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "metrics", labelEn: "Key metrics" },
+            { id: "vulnerability-trends", labelEn: "Vulnerability trends" },
+            { id: "asset-discovery", labelEn: "Asset discovery" },
+            { id: "risk-scoring", labelEn: "Risk scoring" },
+            { id: "top-charts", labelEn: "Top ports & services" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "Overview", labelKh: "ទិដ្ឋភាពទូទៅ" },
+            { id: "metrics", labelEn: "Key metrics", labelKh: "Key metrics" },
+            { id: "vulnerability-trends", labelEn: "Vulnerability trends", labelKh: "Vulnerability trends" },
+            { id: "asset-discovery", labelEn: "Asset discovery", labelKh: "Asset discovery" },
+            { id: "risk-scoring", labelEn: "Risk scoring", labelKh: "Risk scoring" },
+            { id: "top-charts", labelEn: "Top ports & services", labelKh: "Top ports និង services" },
+        ],
+    },
+    "/cli": {
+        sectionIds: ["installation", "auth", "commands", "tools", "execution", "streaming", "results", "jobs", "security", "concept"],
+        tocEn: [
+            { id: "installation", labelEn: "Installation & Setup" },
+            { id: "auth", labelEn: "Authentication" },
+            { id: "commands", labelEn: "Command Execution" },
+            { id: "tools", labelEn: "Supported Tools" },
+            { id: "execution", labelEn: "Remote Execution Model" },
+            { id: "streaming", labelEn: "Output Streaming" },
+            { id: "results", labelEn: "Result Handling" },
+            { id: "jobs", labelEn: "Job Lifecycle" },
+            { id: "security", labelEn: "Security & Access Control" },
+            { id: "concept", labelEn: "How It Works" },
+        ],
+        tocKh: [
+            { id: "installation", labelEn: "ការដំឡើង និង Setup" },
+            { id: "auth", labelEn: "Authentication" },
+            { id: "commands", labelEn: "ការប្រើ Commands" },
+            { id: "tools", labelEn: "Tools ដែលគាំទ្រ" },
+            { id: "execution", labelEn: "Remote Execution Model" },
+            { id: "streaming", labelEn: "Output Streaming" },
+            { id: "results", labelEn: "ការគ្រប់គ្រង Results" },
+            { id: "jobs", labelEn: "Job Lifecycle" },
+            { id: "security", labelEn: "Security និង Access Control" },
+            { id: "concept", labelEn: "របៀបដំណើរការ" },
+        ],
+    },
+    "/api": {
+        sectionIds: ["overview", "auth", "ratelimit", "errors", "proj-list", "proj-create", "proj-get", "proj-delete", "scan-create", "scan-list", "scan-get", "scan-stop", "scan-retry", "results-get", "report-gen", "report-list", "report-download"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "auth", labelEn: "Authentication" },
+            { id: "ratelimit", labelEn: "Rate Limits" },
+            { id: "errors", labelEn: "Error Codes" },
+            { id: "proj-list", labelEn: "List Projects" },
+            { id: "proj-create", labelEn: "Create Project" },
+            { id: "proj-get", labelEn: "Get Project" },
+            { id: "proj-delete", labelEn: "Delete Project" },
+            { id: "scan-create", labelEn: "Create Scan" },
+            { id: "scan-list", labelEn: "List Scans" },
+            { id: "scan-get", labelEn: "Get Scan Status" },
+            { id: "scan-stop", labelEn: "Stop Scan" },
+            { id: "scan-retry", labelEn: "Retry Scan" },
+            { id: "results-get", labelEn: "Get Results" },
+            { id: "report-gen", labelEn: "Generate Report" },
+            { id: "report-list", labelEn: "List Reports" },
+            { id: "report-download", labelEn: "Download Report" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "ទិដ្ឋភាពទូទៅ" },
+            { id: "auth", labelEn: "Authentication" },
+            { id: "ratelimit", labelEn: "Rate Limits" },
+            { id: "errors", labelEn: "Error Codes" },
+            { id: "proj-list", labelEn: "បញ្ជី Projects" },
+            { id: "proj-create", labelEn: "បង្កើត Project" },
+            { id: "proj-get", labelEn: "មើល Project" },
+            { id: "proj-delete", labelEn: "លុប Project" },
+            { id: "scan-create", labelEn: "បង្កើត Scan" },
+            { id: "scan-list", labelEn: "បញ្ជី Scans" },
+            { id: "scan-get", labelEn: "មើល Scan Status" },
+            { id: "scan-stop", labelEn: "បញ្ឈប់ Scan" },
+            { id: "scan-retry", labelEn: "Retry Scan" },
+            { id: "results-get", labelEn: "មើល Results" },
+            { id: "report-gen", labelEn: "បង្កើត Report" },
+            { id: "report-list", labelEn: "បញ្ជី Reports" },
+            { id: "report-download", labelEn: "ទាញយក Report" },
+        ],
+    },
+    "/ci-cd": {
+        sectionIds: ["overview", "workflow", "auth", "endpoints", "trigger", "status", "results", "report", "pipeline", "thresholds", "access"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "workflow", labelEn: "CI/CD Workflow" },
+            { id: "auth", labelEn: "Authentication" },
+            { id: "endpoints", labelEn: "API Endpoints" },
+            { id: "trigger", labelEn: "Triggering a Scan" },
+            { id: "status", labelEn: "Job Status" },
+            { id: "results", labelEn: "Result Retrieval" },
+            { id: "report", labelEn: "Report Download" },
+            { id: "pipeline", labelEn: "Pipeline Example" },
+            { id: "thresholds", labelEn: "Severity Thresholds" },
+            { id: "access", labelEn: "Access Scoping" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "ទិដ្ឋភាពទូទៅ" },
+            { id: "workflow", labelEn: "លំហូរ CI/CD" },
+            { id: "auth", labelEn: "Authentication" },
+            { id: "endpoints", labelEn: "API Endpoints" },
+            { id: "trigger", labelEn: "ការបើកការស្កេន" },
+            { id: "status", labelEn: "ស្ថានភាព Job" },
+            { id: "results", labelEn: "ទាញយកលទ្ធផល" },
+            { id: "report", labelEn: "ទាញយក Report" },
+            { id: "pipeline", labelEn: "ឧទាហរណ៍ Pipeline" },
+            { id: "thresholds", labelEn: "Severity Thresholds" },
+            { id: "access", labelEn: "Access Scoping" },
+        ],
+    },
+    "/tools": {
+        sectionIds: ["overview", "versions", "limits", "output", "subfinder", "httpx", "naabu", "nuclei", "errors"],
+        tocEn: [
+            { id: "overview", labelEn: "Overview" },
+            { id: "versions", labelEn: "Versions & Status" },
+            { id: "limits", labelEn: "Rate Limits" },
+            { id: "output", labelEn: "Output Formats" },
+            { id: "subfinder", labelEn: "subfinder" },
+            { id: "httpx", labelEn: "httpx" },
+            { id: "naabu", labelEn: "naabu" },
+            { id: "nuclei", labelEn: "nuclei" },
+            { id: "errors", labelEn: "Error Reference" },
+        ],
+        tocKh: [
+            { id: "overview", labelEn: "ទិដ្ឋភាពទូទៅ" },
+            { id: "versions", labelEn: "Versions & Status" },
+            { id: "limits", labelEn: "Rate Limits" },
+            { id: "output", labelEn: "Output Formats" },
+            { id: "subfinder", labelEn: "subfinder" },
+            { id: "httpx", labelEn: "httpx" },
+            { id: "naabu", labelEn: "naabu" },
+            { id: "nuclei", labelEn: "nuclei" },
+            { id: "errors", labelEn: "Error Reference" },
+        ],
+    },
+    "/quickstart": {
+        sectionIds: ["install", "login", "project", "scan", "findings", "troubleshooting", "next-steps"],
+        tocEn: [
+            { id: "install", labelEn: "Step 1: Install" },
+            { id: "login", labelEn: "Step 2: Log in" },
+            { id: "project", labelEn: "Step 3: Create a project" },
+            { id: "scan", labelEn: "Step 4: Run your first scan" },
+            { id: "findings", labelEn: "Step 5: View findings" },
+            { id: "troubleshooting", labelEn: "Common issue: Login fails" },
+            { id: "next-steps", labelEn: "Next steps" },
+        ],
+        tocKh: [
+            { id: "install", labelEn: "ជំហាន ១៖ ដំឡើង" },
+            { id: "login", labelEn: "ជំហាន ២៖ ចូល" },
+            { id: "project", labelEn: "ជំហាន ៣៖ បង្កើត project" },
+            { id: "scan", labelEn: "ជំហាន ៤៖ ដំណើរការ scan" },
+            { id: "findings", labelEn: "ជំហាន ៥៖ មើល findings" },
+            { id: "troubleshooting", labelEn: "ការដោះស្រាយបញ្ហា" },
+            { id: "next-steps", labelEn: "ជំហានបន្ទាប់" },
+        ],
+    },
+    "/api/recipes": {
+        sectionIds: ["projects", "proj-create", "proj-list", "proj-get", "proj-update", "proj-delete", "scans", "scan-basic", "scan-advanced", "scan-status", "scan-logs", "queue-position", "scan-cancel", "findings", "find-list", "find-filter", "find-get", "find-export-json", "find-export-csv", "errors", "quick-ref"],
+        tocEn: [
+            { id: "projects", labelEn: "Manage projects" },
+            { id: "scans", labelEn: "Submit and track scans" },
+            { id: "findings", labelEn: "Findings" },
+            { id: "errors", labelEn: "Common errors" },
+            { id: "quick-ref", labelEn: "Quick reference" },
+        ],
+        tocKh: [
+            { id: "projects", labelEn: "គ្រប់គ្រង Projects" },
+            { id: "scans", labelEn: "ដាក់បញ្ជូន Scans" },
+            { id: "findings", labelEn: "Findings" },
+            { id: "errors", labelEn: "Errors ទូទៅ" },
+            { id: "quick-ref", labelEn: "ឯកសារយោងលឿន" },
+        ],
+    },
+    "/concepts": {
+        sectionIds: ["project", "target", "scan", "step", "finding", "pipeline", "api-key", "mental-model"],
+        tocEn: [
+            { id: "project", labelEn: "Project" },
+            { id: "target", labelEn: "Target" },
+            { id: "scan", labelEn: "Scan / Job" },
+            { id: "step", labelEn: "Step" },
+            { id: "finding", labelEn: "Finding" },
+            { id: "pipeline", labelEn: "Pipeline" },
+            { id: "api-key", labelEn: "API Key" },
+            { id: "mental-model", labelEn: "Quick mental model" },
+        ],
+        tocKh: [
+            { id: "project", labelEn: "Project" },
+            { id: "target", labelEn: "Target" },
+            { id: "scan", labelEn: "Scan / Job" },
+            { id: "step", labelEn: "Step" },
+            { id: "finding", labelEn: "Finding" },
+            { id: "pipeline", labelEn: "Pipeline" },
+            { id: "api-key", labelEn: "API Key" },
+            { id: "mental-model", labelEn: "ទិដ្ឋភាពសរុបក្នុងគំនិត" },
+        ],
+    },
+};
 
 /* ─────────────────────────────────────────────
    Global nav definition
@@ -285,8 +597,8 @@ function LeftSidebar({
                                     <Link
                                         href={page.href}
                                         className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-[14.5px] font-medium transition-colors duration-150 ${isActive
-                                                ? "bg-[#00BCA1]/10 text-[#00BCA1]"
-                                                : "text-[#4A4540] dark:text-[#C9CDD4] hover:bg-[#EEEAE2] dark:hover:bg-white/5 hover:text-[#1A1714] dark:hover:text-white"
+                                            ? "bg-[#00BCA1]/10 text-[#00BCA1]"
+                                            : "text-[#4A4540] dark:text-[#C9CDD4] hover:bg-[#EEEAE2] dark:hover:bg-white/5 hover:text-[#1A1714] dark:hover:text-white"
                                             }`}
                                     >
                                         {Icon && <Icon className="h-4 w-4 shrink-0" />}
@@ -303,8 +615,8 @@ function LeftSidebar({
                                                         key={item.id}
                                                         href={`#${item.id}`}
                                                         className={`block py-1 pl-3 -ml-px border-l-2 text-[13px] leading-[1.5] transition-colors duration-150 ${isItemActive
-                                                                ? "border-l-[#00BCA1] text-[#00BCA1] font-medium"
-                                                                : "border-l-transparent text-[#88837B] dark:text-[#A1A1AA] hover:text-[#1A1714] dark:hover:text-white"
+                                                            ? "border-l-[#00BCA1] text-[#00BCA1] font-medium"
+                                                            : "border-l-transparent text-[#88837B] dark:text-[#A1A1AA] hover:text-[#1A1714] dark:hover:text-white"
                                                             }`}
                                                     >
                                                         {isKhmer ? item.labelKh : item.labelEn}
@@ -403,8 +715,8 @@ function RightSidebar({
                             key={item.id}
                             href={`#${item.id}`}
                             className={`block py-1 pl-3 border-l-2 text-[13.5px] leading-[1.5] transition-colors duration-150 ${active
-                                    ? "border-l-[#00BCA1] text-[#00BCA1] font-medium"
-                                    : "border-l-transparent text-[#88837B] dark:text-[#A1A1AA] hover:text-[#1A1714] dark:hover:text-white hover:border-l-[#CEC9BF] dark:hover:border-l-white/20"
+                                ? "border-l-[#00BCA1] text-[#00BCA1] font-medium"
+                                : "border-l-transparent text-[#88837B] dark:text-[#A1A1AA] hover:text-[#1A1714] dark:hover:text-white hover:border-l-[#CEC9BF] dark:hover:border-l-white/20"
                                 }`}
                         >
                             {isKhmer && item.labelKh ? item.labelKh : item.labelEn}
@@ -425,17 +737,32 @@ function RightSidebar({
    Main DocsLayout
 ───────────────────────────────────────────── */
 export default function DocsLayout({
-    sectionIds,
-    toc,
     children,
 }: DocsLayoutProps) {
     const locale = useLocale();
     const isKhmer = locale === "kh";
+    const pathname = usePathname();
+
+    // Derive route key — strip basePath /docs prefix if present
+    const routeKey = pathname.replace(/^\/docs/, "") || "/";
+    // Match exact or prefix (e.g. /api/authentication → /api)
+    const routeData = ROUTE_DATA[routeKey]
+        ?? Object.entries(ROUTE_DATA).find(([k]) => routeKey.startsWith(k + "/"))?.[1]
+        ?? { sectionIds: [], tocEn: [], tocKh: [] };
+
+    const sectionIds = routeData.sectionIds;
+    const toc = isKhmer ? routeData.tocKh : routeData.tocEn;
+
     const [activeSectionId, setActiveSectionId] = useState(sectionIds[0] ?? "");
 
     const bodyFontFamily = isKhmer
         ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
         : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+
+    // Reset active section when route changes
+    useEffect(() => {
+        setActiveSectionId(sectionIds[0] ?? "");
+    }, [routeKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (sectionIds.length === 0) return;

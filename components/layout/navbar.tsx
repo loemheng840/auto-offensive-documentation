@@ -709,10 +709,11 @@ export function Header() {
                         <a
                             href={getMainHostUrl('/userdashboard')}
                             onClick={() => setOpen(false)}
-                            className="w-full inline-flex items-center justify-center gap-2 rounded-md border border-primary bg-primary/10 py-2 text-center text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+                            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 dark:border-primary/30 dark:bg-primary/12"
                         >
                             <LayoutDashboard className="h-4 w-4" />
                             <span>Dashboard</span>
+                            <ArrowRight className="h-3.5 w-3.5 opacity-70" />
                         </a>
                     ) : (
                         <a

@@ -59,7 +59,7 @@ function Tag({
 function InlineCode({ children }: { children: React.ReactNode }) {
   return (
     <code
-      className="text-[16px] md:text-[18px] lg:text-[20px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10"
+      className="text-[14px] md:text-[15px] lg:text-[16px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10"
       style={monoFontStyle}
     >
       {children}
@@ -104,7 +104,7 @@ function Callout({
           {title}
         </div>
         <div
-          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {children}
@@ -152,7 +152,7 @@ function CodeBlock({
       <div className="bg-[#16181F] px-5 py-4.5 overflow-x-auto">
         <code
           ref={codeRef}
-          className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.92] text-white/55 whitespace-pre"
+          className="text-[14px] md:text-[15px] lg:text-[16px] leading-[1.92] text-white/55 whitespace-pre"
           style={monoFontStyle}
         >
           {children}
@@ -212,13 +212,13 @@ function FeatureItem({
       </div>
       <div className="flex-1 py-3.25 pr-4">
         <div
-          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-0.75 tracking-[-0.01em]"
+          className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white mb-0.75 tracking-[-0.01em]"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {title}
         </div>
         <div
-          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {desc}
@@ -256,13 +256,13 @@ function Step({
       </div>
       <div className="flex-1 pt-0.5">
         <div
-          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-1"
+          className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white mb-1"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {title}
         </div>
         <div
-          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {desc}
@@ -311,7 +311,7 @@ function SubHeading({ children }: { children: React.ReactNode }) {
 function Para({ children }: { children: React.ReactNode }) {
   return (
     <p
-      className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-3"
+      className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-3"
       style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
     >
       {children}
@@ -342,13 +342,13 @@ function SecItem({
       <span className={newLocal}>{icon}</span>
       <div>
         <div
-          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-0.5"
+          className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white mb-0.5"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {title}
         </div>
         <div
-          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65]"
+          className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65]"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {desc}
@@ -410,19 +410,19 @@ function NotList({ isKhmer }: { isKhmer: boolean }) {
           className="flex items-center gap-3 px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
         >
           <span
-            className="text-[16px] md:text-[18px] lg:text-[20px] text-[#B5B0A8] line-through decoration-[#C42828] shrink-0"
+            className="text-[14px] md:text-[15px] lg:text-[16px] text-[#B5B0A8] line-through decoration-[#C42828] shrink-0"
             style={monoFontStyle}
           >
             {item.tool}
           </span>
           <span
-            className="text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1]"
+            className="text-[14px] md:text-[15px] lg:text-[16px] text-[#00BCA1]"
             style={monoFontStyle}
           >
             →
           </span>
           <span
-            className="text-base md:text-[18px] lg:text-[20px] font-medium text-[#4A4540] dark:text-[#C9CDD4] flex-1"
+            className="text-[15px] md:text-[16px] lg:text-[17px] font-medium text-[#4A4540] dark:text-[#C9CDD4] flex-1"
             style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
           >
             {isKhmer ? "ផ្តល់ជូនជា managed backend service តាមរយៈ" : "Provided as a managed backend service via"}{" "}
@@ -472,19 +472,19 @@ function ManagedExecutionList({ isKhmer }: { isKhmer: boolean }) {
                   </div>
                 </td>
                 <td
-                  className="px-2 py-3 text-[16px] md:text-[18px] lg:text-[20px] text-[#B5B0A8] line-through decoration-[#C42828] whitespace-nowrap align-middle"
+                  className="px-2 py-3 text-[14px] md:text-[15px] lg:text-[16px] text-[#B5B0A8] line-through decoration-[#C42828] whitespace-nowrap align-middle"
                   style={monoFontStyle}
                 >
                   {item.tool}
                 </td>
                 <td
-                  className="px-2 py-3 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] whitespace-nowrap align-middle"
+                  className="px-2 py-3 text-[14px] md:text-[15px] lg:text-[16px] text-[#00BCA1] whitespace-nowrap align-middle"
                   style={monoFontStyle}
                 >
                   -&gt;
                 </td>
                 <td
-                  className="px-2 py-3 text-base md:text-[18px] lg:text-[20px] font-medium text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap align-middle"
+                  className="px-2 py-3 text-[15px] md:text-[16px] lg:text-[17px] font-medium text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap align-middle"
                   style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
                 >
                   {isKhmer ? "ផ្តល់ជូនជា managed backend service តាមរយៈ" : "Provided as a managed backend service via"}{" "}
@@ -544,13 +544,13 @@ function SecurityList({ isKhmer }: { isKhmer: boolean }) {
           </div>
           <div className="flex-1">
             <div
-              className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-1"
+              className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white mb-1"
               style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
             >
               {item.title}
             </div>
             <div
-              className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.7]"
+              className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.7]"
               style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
             >
               {item.desc}
@@ -610,7 +610,7 @@ export default function Content() {
           CLI
         </h1>
         <p
-          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-7 max-w-145 font-normal"
+          className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-7 max-w-145 font-normal"
           style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
         >
           {isKhmer
@@ -626,7 +626,7 @@ export default function Content() {
           ].map((pill) => (
             <div
               key={pill.label}
-              className="flex items-center gap-1.5 text-base md:text-[18px] lg:text-[20px] font-medium text-[#88837B] dark:text-[#A1A1AA] bg-white dark:bg-[#121214] border border-[#E2DDD5] dark:border-white/10 px-3 py-1 rounded-full"
+              className="flex items-center gap-1.5 text-[15px] md:text-[16px] lg:text-[17px] font-medium text-[#88837B] dark:text-[#A1A1AA] bg-white dark:bg-[#121214] border border-[#E2DDD5] dark:border-white/10 px-3 py-1 rounded-full"
             >
               <span>{pill.icon}</span>
               {pill.label}
@@ -808,20 +808,20 @@ export default function Content() {
               ].map((row, i) => (
                 <tr key={i} className="hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150">
                   <td
-                    className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium whitespace-nowrap"
+                    className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 text-[14px] md:text-[15px] lg:text-[16px] text-[#00BCA1] font-medium whitespace-nowrap"
                     style={monoFontStyle}
                   >
                     {row.cmd}
                   </td>
                   <td
-                    className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium whitespace-nowrap"
+                    className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-[14px] md:text-[15px] lg:text-[16px] text-[#00BCA1] font-medium whitespace-nowrap"
                     style={monoFontStyle}
                   >
                     {row.tool}
                   </td>
                   <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 whitespace-nowrap">{row.cat}</td>
                   <td
-                    className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap"
+                    className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap"
                     style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
                   >
                     {row.desc}
@@ -1013,13 +1013,13 @@ export default function Content() {
             <svg className="w-3.75 h-3.75 stroke-[#88837B] fill-none shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="15 18 9 12 15 6" /></svg>
             <div>
               <div className="text-[11px] text-[#88837B] dark:text-[#9CA3AF] mb-0.5">{isKhmer ? "មុន" : "Previous"}</div>
-              <div className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white">Multi-Tool Pipeline</div>
+              <div className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white">Multi-Tool Pipeline</div>
             </div>
           </div>
           <div className="flex items-center justify-end gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-57.5 flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer text-right">
             <div>
               <div className="text-[11px] text-[#88837B] dark:text-[#9CA3AF] mb-0.5">{isKhmer ? "បន្ទាប់" : "Next"}</div>
-              <div className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white">Report Generation</div>
+              <div className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white">Report Generation</div>
             </div>
             <svg className="w-3.75 h-3.75 stroke-[#88837B] fill-none shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
           </div>

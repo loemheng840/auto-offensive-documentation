@@ -1,26 +1,22 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import DocumentSkeleton from '@/components/skeleton/document-skeleton';
+import React from 'react';
 
 /**
  * Factory that creates a lazy-loaded document client component.
- * Eliminates the boilerplate `*-document-client.tsx` files that are
- * identical except for the import path.
- *
- * Usage:
- *   const MyDocClient = makeDocClient(() => import('./my-document'));
- *   export default MyDocClient;
+ * Uses React.lazy + Suspense with no fallback — zero loading UI,
+ * navigation between doc pages is instant with no flash.
  */
 export function makeDocClient(
     loader: () => Promise<{ default: React.ComponentType }>
 ) {
-    const DocComponent = dynamic(loader, {
-        ssr: false,
-        loading: () => <DocumentSkeleton />,
-    });
+    const DocComponent = React.lazy(loader);
 
     return function DocClient() {
-        return <DocComponent />;
+        return (
+            <React.Suspense fallback={null}>
+                <DocComponent />
+            </React.Suspense>
+        );
     };
 }
