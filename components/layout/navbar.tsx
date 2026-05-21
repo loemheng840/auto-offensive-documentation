@@ -132,7 +132,7 @@ function Logo() {
 
     return (
         <a href={mainHostUrl} className="cursor-pointer shrink-0">
-            <Image src={src} alt="Auto-Offensive" width={100} height={40} priority style={{ width: 100, height: 40 }} />
+            <Image src={src} alt="Auto-Offensive" width={100} height={40} priority style={{ width: 'auto', height: 'auto' }} />
         </a>
     );
 }

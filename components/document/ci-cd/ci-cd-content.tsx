@@ -16,7 +16,7 @@ const monoFontStyle = {
 function InlineCode({ children }: { children: React.ReactNode }) {
   return (
     <code
-      className="text-[16px] md:text-[18px] lg:text-[20px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10"
+      className="text-[14px] md:text-[15px] lg:text-[16px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10"
       style={monoFontStyle}
     >
       {children}
@@ -51,7 +51,7 @@ function Tag({
 function Para({ children }: { children: React.ReactNode }) {
   return (
     <p
-      className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-3"
+      className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-3"
       style={sansFontStyle}
     >
       {children}
@@ -89,7 +89,7 @@ function Callout({
           {title}
         </div>
         <div
-          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
           style={sansFontStyle}
         >
           {children}
@@ -140,7 +140,7 @@ function CodeBlock({
       <div className="bg-[#16181F] px-5 py-4.5 overflow-x-auto">
         <code
           ref={codeRef}
-          className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.92] text-white/55 whitespace-pre"
+          className="text-[14px] md:text-[15px] lg:text-[16px] leading-[1.92] text-white/55 whitespace-pre"
           style={monoFontStyle}
         >
           {children}
@@ -182,7 +182,7 @@ function Table({
               {row.map((cell, cellIndex) => (
                 <td
                   key={`cell-${rowIndex}-${cellIndex}`}
-                  className="px-4 py-3 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72] align-top whitespace-nowrap"
+                  className="px-4 py-3 text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72] align-top whitespace-nowrap"
                   style={sansFontStyle}
                 >
                   {cell}
@@ -429,13 +429,13 @@ export default function CICDContent() {
                 <Tag variant={card.variant}>{card.title}</Tag>
               </div>
               <div
-                className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-1"
+                className="text-[15px] md:text-[16px] lg:text-[17px] font-semibold text-[#1A1714] dark:text-white mb-1"
                 style={sansFontStyle}
               >
                 {card.title}
               </div>
               <div
-                className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+                className="text-[15px] md:text-[16px] lg:text-[17px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
                 style={sansFontStyle}
               >
                 {card.desc}
