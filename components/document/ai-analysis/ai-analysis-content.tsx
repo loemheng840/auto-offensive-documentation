@@ -190,37 +190,14 @@ export default function AIAnalysisContent() {
                         : "This mode analyzes your scan results and recommends 3-5 next tool runs with priority and reasoning. Great for guiding workflows when you're unsure of the next step."}
                 </Para>
 
-                <CodeBlock title="bash · POST /ai-suggestions/generate">
-                    {`curl -X POST https://api.auto-offensive.com/ai-suggestions/generate \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "job_id": "job_xyz789",
-    "mode": "next_steps"
-  }'
-
-# Response (excerpt)
-{
-  "id": "sug_a1b2c3",
-  "job_id": "job_xyz789",
-  "mode": "next_steps",
-  "next_steps": [
-    {
-      "priority": "high",
-      "tool": "nuclei",
-      "params": {"targets": "live_hosts.txt", "severity": "critical,high"},
-      "rationale": "Live HTTP services discovered — scan for known CVEs"
-    },
-    {
-      "priority": "medium",
-      "tool": "naabu",
-      "params": {"hosts": "live_hosts.txt", "ports": "1-65535"},
-      "rationale": "Full port scan to find non-standard services"
-    }
-  ],
-  "usage": {"input_tokens": 2150, "output_tokens": 480, "cost_usd": 0.0021}
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រលម្អិតនៃ Scan ណាមួយ។" : "Navigate to any Scan details page."}</li>
+                    <li>{isKhmer ? "ចុចលើផ្ទាំង 'AI Suggestions' ឬ 'Next Steps'។" : "Click on the 'AI Suggestions' or 'Next Steps' tab."}</li>
+                    <li>{isKhmer ? "ចុចប៊ូតុង 'Generate Suggestions'។" : "Click the 'Generate Suggestions' button."}</li>
+                    <li>{isKhmer ? "រង់ចាំបន្តិចដើម្បីឱ្យ Claude វិភាគទិន្នន័យ។" : "Wait a moment for Claude to analyze the data."}</li>
+                    <li>{isKhmer ? "បញ្ជីនៃជំហានបន្ទាប់នឹងបង្ហាញឡើងជាមួយនឹងអាទិភាព។" : "A list of next steps will appear with priority levels."}</li>
+                </ol>
             </section>
 
             {/* Deep analysis */}
@@ -232,30 +209,13 @@ export default function AIAnalysisContent() {
                         : "Deep analysis produces an executive-level summary of the scan with severity grouping, attack path analysis, and remediation steps. Great for pre-report walkthroughs or briefing non-technical stakeholders."}
                 </Para>
 
-                <CodeBlock title="bash · analysis output">
-                    {`{
-  "id": "sug_d4e5f6",
-  "mode": "analysis",
-  "executive_summary": "Two HTTP services detected with outdated nginx (1.18) — CVE-2021-23017 risk.",
-  "findings_grouped": {
-    "critical": 0,
-    "high": 1,
-    "medium": 3,
-    "low": 5
-  },
-  "attack_paths": [
-    {
-      "name": "Subdomain takeover via CNAME",
-      "severity": "high",
-      "evidence": "dev.example.com → CNAME to expired AWS S3 bucket"
-    }
-  ],
-  "remediation": [
-    "Upgrade nginx to 1.21+",
-    "Reclaim or delete the dangling DNS record for dev.example.com"
-  ]
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "នៅក្នុង Dashboard សូមជ្រើសរើសផ្ទាំង 'Deep Analysis'។" : "In the Dashboard, select the 'Deep Analysis' tab."}</li>
+                    <li>{isKhmer ? "អ្នកនឹងឃើញ Executive Summary សង្ខេបពីលទ្ធផល។" : "You will see an Executive Summary of the results."}</li>
+                    <li>{isKhmer ? "ពិនិត្យមើល Attack Paths ដើម្បីយល់ពីហានិភ័យ។" : "Review Attack Paths to understand the risks."}</li>
+                    <li>{isKhmer ? "អនុវត្តតាម Remediation steps ដើម្បីជួសជុលបញ្ហា។" : "Follow the Remediation steps to fix the issues."}</li>
+                </ol>
             </section>
 
             {/* MCP Tools */}
@@ -318,35 +278,18 @@ export default function AIAnalysisContent() {
                         ? "មុនពេលបង្កើត suggestion អ្នកអាច estimate cost ដើម្បីបង្ហាញឱ្យអ្នកប្រើនូវ price hint។"
                         : "Before generating a suggestion, you can estimate the cost to show users a price hint."}
                 </Para>
-                <CodeBlock title="bash · POST /ai-suggestions/estimate-cost">
-                    {`curl -X POST https://api.auto-offensive.com/ai-suggestions/estimate-cost \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "mode": "analysis",
-    "expected_input_tokens": 5000,
-    "expected_output_tokens": 1500
-  }'
-
-# Response
-{
-  "provider": "anthropic",
-  "model": "claude-sonnet-4-6",
-  "input_cost_usd": 0.015,
-  "output_cost_usd": 0.0225,
-  "total_cost_usd": 0.0375
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "មើលការប៉ាន់ស្មានតាម UI" : "Viewing estimate via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "នៅពេលអ្នករៀបចំ Generate ការវិភាគ..." : "When you are about to Generate an analysis..."}</li>
+                    <li>{isKhmer ? "ប្រព័ន្ធនឹងបង្ហាញការប៉ាន់ស្មានតម្លៃនៅខាងលើប៊ូតុងដោយស្វ័យប្រវត្តិ។" : "The system will automatically display the estimated cost above the button."}</li>
+                </ol>
 
                 <SubHeading>{isKhmer ? "Capabilities & health" : "Capabilities & health"}</SubHeading>
-                <CodeBlock title="bash · discovery">
-                    {`# What modes/models/tools are available?
-GET /ai-suggestions/capabilities
-
-# Is the AI layer healthy?
-GET /ai-suggestions/health
-# → {"status": "ok", "providers": {"anthropic": true}, "redis_reachable": true}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ពិនិត្យមើលតាម UI" : "Checking via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ 'Settings' > 'AI Configuration'។" : "Go to 'Settings' > 'AI Configuration'."}</li>
+                    <li>{isKhmer ? "អ្នកអាចមើលស្ថានភាព Health របស់ AI និង Models ដែលមាន។" : "You can see the AI Health status and available Models."}</li>
+                </ol>
             </section>
 
             {/* Feedback */}
@@ -358,15 +301,12 @@ GET /ai-suggestions/health
                         : "Operators can submit feedback on saved suggestions. Feedback is used to improve future outputs through the MCP feedback_history tool."}
                 </Para>
 
-                <CodeBlock title="bash · PATCH feedback">
-                    {`curl -X PATCH https://api.auto-offensive.com/ai-suggestions/$JOB_ID/feedback \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "rating": "thumbs_up",
-    "comment": "Caught a CVE we missed manually"
-  }'`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ផ្តល់ Feedback តាម UI" : "Providing Feedback via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "នៅខាងក្រោម Suggestion នីមួយៗ មានប៊ូតុង Thumbs Up និង Thumbs Down។" : "Below each Suggestion, there are Thumbs Up and Thumbs Down buttons."}</li>
+                    <li>{isKhmer ? "ចុចលើវា ហើយអ្នកអាចសរសេរមតិយោបល់របស់អ្នកបាន។" : "Click on them and you can write your comment."}</li>
+                    <li>{isKhmer ? "ចុច Submit ដើម្បីរក្សាទុក។" : "Click Submit to save."}</li>
+                </ol>
             </section>
 
             <DocsFooterNav

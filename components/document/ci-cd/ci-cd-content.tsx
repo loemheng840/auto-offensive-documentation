@@ -284,7 +284,7 @@ export default function CICDContent() {
       securityNote: "ចំណាំសុវត្ថិភាព",
       securityNoteBody:
         "ប្រើ environment secrets, បង្វិល keys នៅពេលសមាជិកក្រុមផ្លាស់ប្តូរ ហើយកំណត់សិទ្ធិ credentials ឱ្យតូចបំផុតតាម workspace ឬ environment ដែល pipeline ត្រូវការ។",
-      apiEndpoints: "API Endpoints",
+      apiEndpoints: "CLI Commands",
       trigger: "ការបើកការស្កេន",
       triggerBody:
         "បង្កើត scan មួយដោយប្រើ POST /scans/advanced/submit។ ប្រសិនបើ request ជោគជ័យ វានឹងត្រឡប់ job_id មកវិញ ដែល pipeline អាចរក្សាទុក និងប្រើបន្តនៅជំហានក្រោយ។",
@@ -313,7 +313,7 @@ export default function CICDContent() {
       accessBody:
         "Requests ត្រូវបានកំណត់សិទ្ធិទៅ workspace ដែលបាន authenticate ជានិច្ច។ Pipelines មិនអាចអាន scans, jobs ឬ reports ពី workspaces ផ្សេងទេ ហើយ invalid cross-workspace references គួរតែត្រឡប់ 403 Forbidden។",
       fieldHeaders: ["Field", "Type", "Required", "Description"],
-      methodHeaders: ["Method", "Path", "Description"],
+      methodHeaders: ["Command", "Description"],
       statusHeaders: ["Status", "Meaning"],
       parameterHeaders: ["Parameter", "Values", "Default"],
       thresholdHeaders: ["Threshold", "Pipeline Behaviour"],
@@ -342,7 +342,7 @@ export default function CICDContent() {
       securityNote: "Security Note",
       securityNoteBody:
         "Use environment secrets, rotate keys when team access changes, and scope credentials to the smallest workspace or environment that still lets the pipeline do its job.",
-      apiEndpoints: "API Endpoints",
+      apiEndpoints: "CLI Commands",
       trigger: "Triggering a Scan",
       triggerBody:
         "Create a scan with POST /scans/advanced/submit. A successful request returns a job_id that the pipeline can store and reuse in later steps.",
@@ -371,7 +371,7 @@ export default function CICDContent() {
       accessBody:
         "Requests are always scoped to the authenticated workspace. Pipelines cannot read scans, jobs, or reports from other workspaces, and invalid cross-workspace references should return 403 Forbidden.",
       fieldHeaders: ["Field", "Type", "Required", "Description"],
-      methodHeaders: ["Method", "Path", "Description"],
+      methodHeaders: ["Command", "Description"],
       statusHeaders: ["Status", "Meaning"],
       parameterHeaders: ["Parameter", "Values", "Default"],
       thresholdHeaders: ["Threshold", "Pipeline Behaviour"],
@@ -536,10 +536,10 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
         <Table
           headers={copy.methodHeaders}
           rows={[
-            [<Tag key="post-1" variant="success">POST</Tag>, <InlineCode key="path-1">/scans/advanced/submit</InlineCode>, isKhmer ? "បង្កើត scan job ថ្មីពី pipeline។" : "Create a new scan job from the pipeline."],
-            [<Tag key="get-1" variant="info">GET</Tag>, <InlineCode key="path-2">/scans/jobs/{`{job_id}`}</InlineCode>, isKhmer ? "ពិនិត្យវឌ្ឍនភាព និងស្ថានភាព scan។" : "Check scan progress and status."],
-            [<Tag key="get-2" variant="info">GET</Tag>, <InlineCode key="path-3">/scans/jobs/{`{job_id}`}/results</InlineCode>, isKhmer ? "ទាញយក findings ដែលបាន normalize។" : "Fetch normalized findings."],
-            [<Tag key="get-3" variant="info">GET</Tag>, <InlineCode key="path-4">/scans/jobs/{`{job_id}`}/report</InlineCode>, isKhmer ? "ទាញយក report ដែលបានបង្កើត។" : "Download the generated report."],
+            [<InlineCode key="cmd-1">aof scans submit</InlineCode>, isKhmer ? "បង្កើត scan job ថ្មីពី pipeline។" : "Create a new scan job from the pipeline."],
+            [<InlineCode key="cmd-2">aof scans status</InlineCode>, isKhmer ? "ពិនិត្យវឌ្ឍនភាព និងស្ថានភាព scan។" : "Check scan progress and status."],
+            [<InlineCode key="cmd-3">aof findings list</InlineCode>, isKhmer ? "ទាញយក findings ដែលបាន normalize។" : "Fetch normalized findings."],
+            [<InlineCode key="cmd-4">aof reports download</InlineCode>, isKhmer ? "ទាញយក report ដែលបានបង្កើត។" : "Download the generated report."],
           ]}
         />
       </section>
@@ -556,12 +556,11 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
         <Para>
           {isKhmer ? (
             <>
-              បង្កើត scan មួយដោយប្រើ <InlineCode>POST /scans/advanced/submit</InlineCode>។ ប្រសិនបើ request
-              ជោគជ័យ វានឹងត្រឡប់ <InlineCode>job_id</InlineCode> មកវិញ ដែល pipeline អាចរក្សាទុក និងប្រើបន្តនៅជំហានក្រោយ។
+              បង្កើត scan មួយដោយប្រើ <InlineCode>aof scans submit</InlineCode>។ CLI នឹងត្រឡប់ <InlineCode>job_id</InlineCode> មកវិញ ដែល pipeline អាចរក្សាទុក និងប្រើបន្ត។
             </>
           ) : (
             <>
-              Create a scan with <InlineCode>POST /scans/advanced/submit</InlineCode>. A successful request returns
+              Create a scan with <InlineCode>aof scans submit</InlineCode>. The CLI returns
               a <InlineCode>job_id</InlineCode> that the pipeline can store and reuse in later steps.
             </>
           )}
@@ -600,15 +599,13 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
         <Para>
           {isKhmer ? (
             <>
-              ធ្វើការ poll <InlineCode>GET /scans/jobs/{`{job_id}`}</InlineCode> រហូតដល់ scan
-              ទៅដល់ terminal state។ Pipeline អាចបន្ត poll នៅពេល status ជា pending ឬ running
-              ហើយឈប់នៅពេល completed, failed ឬ cancelled។
+              ប្រើ <InlineCode>aof scans status --watch</InlineCode> ដើម្បី poll ដោយស្វ័យប្រវត្តិ។
+              CLI នឹងរង់ចាំរហូតដល់ job បានបញ្ចប់។
             </>
           ) : (
             <>
-              Poll <InlineCode>GET /scans/jobs/{`{job_id}`}</InlineCode> until the scan reaches a terminal
-              state. A pipeline can keep polling while the status is pending or running, then stop on
-              completed, failed, or cancelled.
+              Use <InlineCode>aof scans status --watch</InlineCode> to automatically poll.
+              The CLI will block and wait until the job finishes completely.
             </>
           )}
         </Para>
@@ -626,18 +623,10 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
           ]}
         />
 
-        <CodeBlock title="JSON Response">{`{
-  "job_id": "job_8f3a21cd",
-  "status": "completed",
-  "started_at": "2026-04-09T10:32:15Z",
-  "completed_at": "2026-04-09T10:38:42Z",
-  "findings_count": {
-    "critical": 1,
-    "high": 3,
-    "medium": 7,
-    "low": 12
-  }
-}`}</CodeBlock>
+        <CodeBlock title="bash">{`$ aof scans status job_8f3a21cd --watch
+[INFO] Job is running... (Elapsed: 45s)
+[INFO] Job completed successfully!
+Findings: 1 Critical, 3 High, 7 Medium, 12 Low`}</CodeBlock>
       </section>
 
       <section id="results" className="mb-16 scroll-mt-20">
@@ -652,15 +641,13 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
         <Para>
           {isKhmer ? (
             <>
-              នៅពេល job ត្រឡប់ <Tag variant="success">completed</Tag> សូមទាញយក findings ពី{" "}
-              <InlineCode>GET /scans/jobs/{`{job_id}`}/results</InlineCode>។ Response នេះសមស្របសម្រាប់
-              quality gates, dashboards និង downstream automation។
+              ទាញយក findings ដោយប្រើ <InlineCode>aof findings list</InlineCode>។
+              អ្នកអាច export លទ្ធផលជា JSON សម្រាប់ប្រើក្នុង downstream automation។
             </>
           ) : (
             <>
-              Once the job returns <Tag variant="success">completed</Tag>, retrieve findings from{" "}
-              <InlineCode>GET /scans/jobs/{`{job_id}`}/results</InlineCode>. This response is ideal for
-              quality gates, dashboards, and downstream automation.
+              Retrieve findings using <InlineCode>aof findings list</InlineCode>.
+              You can export the results as JSON for downstream automation.
             </>
           )}
         </Para>
@@ -679,20 +666,7 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
           )}
         </Callout>
 
-        <CodeBlock title="JSON Response">{`{
-  "job_id": "job_8f3a21cd",
-  "total": 23,
-  "findings": [
-    {
-      "id": "f_001",
-      "severity": "critical",
-      "category": "SQL Injection",
-      "endpoint": "/api/v1/login",
-      "description": "Unsanitized input in login parameter",
-      "cvss_score": 9.8
-    }
-  ]
-}`}</CodeBlock>
+        <CodeBlock title="bash">{`$ aof findings list job_8f3a21cd --format json > results.json`}</CodeBlock>
       </section>
 
       <section id="report" className="mb-16 scroll-mt-20">
@@ -707,15 +681,13 @@ curl -X POST "https://api.auto-offensive.com/api/v1/apikeys/create?project_id=pr
         <Para>
           {isKhmer ? (
             <>
-              ទាញយក reports ដោយប្រើ <InlineCode>GET /scans/jobs/{`{job_id}`}/report</InlineCode>។
-              អ្នកអាចស្នើ JSON ដែល machine-readable ឬ PDF ដែលមនុស្សអាចអានបាន អាស្រ័យលើអ្វីដែល pipeline
-              ត្រូវការបន្ទាប់។
+              ទាញយក reports ដោយប្រើ <InlineCode>aof reports download</InlineCode>។
+              អ្នកអាចស្នើ PDF ដែលមនុស្សអាចអានបានសម្រាប់ផ្ញើទៅ email។
             </>
           ) : (
             <>
-              Download reports with <InlineCode>GET /scans/jobs/{`{job_id}`}/report</InlineCode>. You can
-              request machine-readable JSON or human-readable PDF output depending on what the pipeline
-              needs next.
+              Download reports with <InlineCode>aof reports download</InlineCode>. You can
+              request a human-readable PDF output to email to stakeholders.
             </>
           )}
         </Para>
@@ -759,55 +731,24 @@ on:
     branches: [main, develop]
   pull_request:
 
-env:
-  API_URL: https://api.auto-offensive.com
-
 jobs:
   security-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Scan
-        id: trigger
-        run: |
-          RESPONSE=$(curl -s -X POST \\
-            "$API_URL/scans/advanced/submit" \\
-            -H "Authorization: Bearer \${{ secrets.AOF_API_KEY }}" \\
-            -H "Content-Type: application/json" \\
-            -d '{
-              "project_id": "\${{ vars.AOF_PROJECT_ID }}",
-              "command": "subfinder -d \${{ vars.TARGET_DOMAIN }} | httpx -sc | nuclei -severity critical,high",
-              "execution_mode": "advanced"
-            }')
-          echo "job_id=$(echo $RESPONSE | jq -r .job_id)" >> $GITHUB_OUTPUT
+      - name: Install Auto-Offensive CLI
+        run: curl -sL https://cli.auto-offensive.com/install.sh | bash
 
-      - name: Poll Until Complete
-        id: poll
+      - name: Run Security Scan & Quality Gate
+        env:
+          AOF_API_KEY: \${{ secrets.AOF_API_KEY }}
         run: |
-          JOB_ID="\${{ steps.trigger.outputs.job_id }}"
-          while true; do
-            RESP=$(curl -s "$API_URL/scans/jobs/$JOB_ID" \\
-              -H "Authorization: Bearer \${{ secrets.AOF_API_KEY }}")
-            STATUS=$(echo $RESP | jq -r '.status')
-            echo "Current status: $STATUS"
-            case "$STATUS" in
-              JOB_STATUS_COMPLETED|JOB_STATUS_PARTIAL) break ;;
-              JOB_STATUS_FAILED|JOB_STATUS_CANCELLED) echo "::error::Scan $STATUS"; exit 1 ;;
-            esac
-            sleep 15
-          done
-
-      - name: Fetch Findings & Quality Gate
-        run: |
-          JOB_ID="\${{ steps.trigger.outputs.job_id }}"
-          SUMMARY=$(curl -s "$API_URL/scans/advanced/jobs/$JOB_ID/summary" \\
-            -H "Authorization: Bearer \${{ secrets.AOF_API_KEY }}")
-          CRITICAL=$(echo $SUMMARY | jq '.severity_counts.critical // 0')
-          HIGH=$(echo $SUMMARY | jq '.severity_counts.high // 0')
-          echo "Critical: $CRITICAL, High: $HIGH"
-          if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
-            echo "::error::Found $CRITICAL critical and $HIGH high severity findings"
-            exit 1
-          fi`}</CodeBlock>
+          aof scans submit \\
+            --project "\${{ vars.AOF_PROJECT_ID }}" \\
+            --target "\${{ vars.TARGET_DOMAIN }}" \\
+            --modules "subfinder,httpx,nuclei" \\
+            --severity-threshold "critical,high" \\
+            --watch \\
+            --fail-pipeline`}</CodeBlock>
       </section>
 
       <section id="thresholds" className="mb-16 scroll-mt-20">
@@ -954,10 +895,10 @@ X-RateLimit-Reset: 1705363200
         <Table
           headers={["Status", isKhmer ? "អត្ថន័យ" : "Meaning", isKhmer ? "សកម្មភាព Pipeline" : "Pipeline Action"]}
           rows={[
-            ["401", isKhmer ? "API key មិនត្រឹមត្រូវ ឬផុតកំណត់" : "Invalid or expired API key", isKhmer ? "បោះបង់ — ពិនិត្យ secret configuration" : "Abort — check secret configuration"],
-            ["403", isKhmer ? "Key មិនមានសិទ្ធិលើ project នេះ" : "Key not authorized for this project", isKhmer ? "បោះបង់ — ពិនិត្យ key scope" : "Abort — verify key scope"],
-            ["429", isKhmer ? "Quota ឬ rate limit លើស" : "Quota or rate limit exceeded", isKhmer ? "រង់ចាំរហូតដល់ reset timestamp ហើយ retry" : "Wait until reset timestamp, then retry"],
-            ["5xx", isKhmer ? "Server error" : "Server error", isKhmer ? "Retry ជាមួយ exponential backoff (អតិបរមា 3 ដង)" : "Retry with exponential backoff (max 3 attempts)"],
+            [<span key="401" className="font-mono font-semibold text-[15px] md:text-[16px] text-red-600 dark:text-red-400">401</span>, isKhmer ? "API key មិនត្រឹមត្រូវ ឬផុតកំណត់" : "Invalid or expired API key", isKhmer ? "បោះបង់ — ពិនិត្យ secret configuration" : "Abort — check secret configuration"],
+            [<span key="403" className="font-mono font-semibold text-[15px] md:text-[16px] text-red-600 dark:text-red-400">403</span>, isKhmer ? "Key មិនមានសិទ្ធិលើ project នេះ" : "Key not authorized for this project", isKhmer ? "បោះបង់ — ពិនិត្យ key scope" : "Abort — verify key scope"],
+            [<span key="429" className="font-mono font-semibold text-[15px] md:text-[16px] text-amber-600 dark:text-amber-400">429</span>, isKhmer ? "Quota ឬ rate limit លើស" : "Quota or rate limit exceeded", isKhmer ? "រង់ចាំរហូតដល់ reset timestamp ហើយ retry" : "Wait until reset timestamp, then retry"],
+            [<span key="5xx" className="font-mono font-semibold text-[15px] md:text-[16px] text-red-600 dark:text-red-400">5xx</span>, isKhmer ? "Server error" : "Server error", isKhmer ? "Retry ជាមួយ exponential backoff (អតិបរមា 3 ដង)" : "Retry with exponential backoff (max 3 attempts)"],
           ]}
         />
 

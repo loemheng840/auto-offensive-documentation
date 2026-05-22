@@ -65,39 +65,18 @@ export default function DashboardContent() {
                         : "The overview endpoint /api/v1/dashboard/overview returns the most important aggregate counts."}
                 </Para>
 
-                <CodeBlock title="bash · GET /api/v1/dashboard/overview">
-                    {`curl https://api.auto-offensive.com/api/v1/dashboard/overview \\
-  -H "Authorization: Bearer $AOF_API_KEY"
-
-# Response
-{
-  "ips_total": 142,
-  "hostnames_total": 318,
-  "open_ports_total": 487,
-  "protocols_total": 6,
-  "services_total": 24,
-  "technologies_total": 38,
-  "vulnerabilities_total": 67,
-  "vulnerabilities_by_severity": {
-    "critical": 2,
-    "high": 11,
-    "medium": 28,
-    "low": 26
-  }
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ការមើលតាម UI" : "Viewing via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រ 'Dashboard' ពី sidebar។" : "Navigate to the 'Dashboard' page from the sidebar."}</li>
+                    <li>{isKhmer ? "នៅផ្នែកខាងលើ អ្នកនឹងឃើញកាតសង្ខេបដែលបង្ហាញពីចំនួនសរុប (Hosts, Vulnerabilities, Services...)។" : "At the top, you will see summary cards showing totals (Hosts, Vulnerabilities, Services...)."}</li>
+                </ol>
 
                 <SubHeading>{isKhmer ? "Severity distribution" : "Severity distribution"}</SubHeading>
-                <CodeBlock title="bash · GET /vulnerabilities/severity">
-                    {`# Returns chart data for severity breakdown
-GET /api/v1/dashboard/vulnerabilities/severity
-
-# Response
-{
-  "labels": ["Critical", "High", "Medium", "Low", "Info"],
-  "data": [2, 11, 28, 26, 12]
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "តារាងតាម UI" : "Charts via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "រំកិលចុះក្រោមដើម្បីមើលតារាង 'Vulnerabilities by Severity'។" : "Scroll down to see the 'Vulnerabilities by Severity' chart."}</li>
+                    <li>{isKhmer ? "វាបង្ហាញជាទម្រង់ Donut Chart ងាយស្រួលមើល។" : "It is displayed as an easy-to-read Donut Chart."}</li>
+                </ol>
             </section>
 
             {/* Vulnerability trends */}
@@ -109,19 +88,11 @@ GET /api/v1/dashboard/vulnerabilities/severity
                         : "Track vulnerabilities over time to see progress and tie regressions to deployments or release windows."}
                 </Para>
 
-                <CodeBlock title="bash · GET /vulnerabilities/trend">
-                    {`# Default range is 30 days
-GET /api/v1/dashboard/vulnerabilities/trend?range=30d
-
-# Custom date range
-GET /api/v1/dashboard/vulnerabilities/trend?startDate=2026-01-01&endDate=2026-04-30
-
-# Response
-{
-  "labels": ["2026-04-01", "2026-04-02", ...],
-  "data": [42, 45, 41, 38, ...]
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "តាមដានតាម UI" : "Tracking via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "មើលតារាងខ្សែ (Line Chart) នៃ 'Vulnerability Trends'។" : "View the Line Chart for 'Vulnerability Trends'."}</li>
+                    <li>{isKhmer ? "អ្នកអាចប្រើ Dropdown ដើម្បីប្តូរចន្លោះពេល (ឧទាហរណ៍ 7 ថ្ងៃ, 30 ថ្ងៃ, 1 ឆ្នាំ)។" : "You can use the Dropdown to change the time range (e.g., 7 days, 30 days, 1 year)."}</li>
+                </ol>
 
                 <Table
                     headers={[isKhmer ? "Range" : "Range", isKhmer ? "ចំនួនថ្ងៃ" : "Days"]}
@@ -143,32 +114,11 @@ GET /api/v1/dashboard/vulnerabilities/trend?startDate=2026-01-01&endDate=2026-04
                         : "See whether your attack surface is growing or shrinking over time — including new subdomains, exposed hosts, and discovered services."}
                 </Para>
 
-                <CodeBlock title="bash · asset trends">
-                    {`# Asset discovery trend over time
-GET /api/v1/dashboard/assets/trend?range=30d
-
-# Most vulnerable assets (paginated, sortable)
-GET /api/v1/dashboard/assets/most-vulnerable?\\
-  page=1&pageSize=20&sortBy=riskScore&order=desc
-
-# Response (excerpt)
-{
-  "assets": [
-    {
-      "id": "asset_1",
-      "hostname": "api.example.com",
-      "ip": "203.0.113.10",
-      "risk_score": 87,
-      "highest_severity": "critical",
-      "vuln_count": 8,
-      "last_scanned_at": "2026-05-19T14:20:00Z"
-    }
-  ],
-  "total": 142,
-  "page": 1,
-  "page_size": 20
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ទិន្នន័យតាម UI" : "Data via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "អ្នកនឹងឃើញតារាង 'Asset Discovery Trend' បង្ហាញពីចំនួន Assets ថ្មីៗ។" : "You will see an 'Asset Discovery Trend' chart showing new Assets."}</li>
+                    <li>{isKhmer ? "នៅខាងក្រោម មានតារាងបញ្ជី 'Most Vulnerable Assets' ដែលបង្ហាញ Host ណាមានហានិភ័យជាងគេ។" : "Below that, there is a 'Most Vulnerable Assets' table showing which Hosts are at the highest risk."}</li>
+                </ol>
             </section>
 
             {/* Risk scoring */}
@@ -180,20 +130,11 @@ GET /api/v1/dashboard/assets/most-vulnerable?\\
                         : "Each asset gets a 0-100 risk score computed from severity, exploitability, and recency of findings. The distribution endpoint buckets assets into risk tiers:"}
                 </Para>
 
-                <CodeBlock title="bash · risk distribution">
-                    {`GET /api/v1/dashboard/risk/distribution
-
-# Response
-{
-  "buckets": [
-    {"range": "0-20",  "label": "Low",      "count": 89},
-    {"range": "21-40", "label": "Medium",   "count": 32},
-    {"range": "41-60", "label": "High",     "count": 14},
-    {"range": "61-80", "label": "Critical", "count": 6},
-    {"range": "81-100", "label": "Severe",  "count": 1}
-  ]
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "Risk Distribution UI" : "Risk Distribution UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "តារាង Bar Chart មួយនឹងបង្ហាញពីការបែងចែក Risk Score ពី Low ទៅ Severe។" : "A Bar Chart will show the distribution of Risk Scores from Low to Severe."}</li>
+                    <li>{isKhmer ? "អ្នកអាចយក mouse ទៅដាក់លើ Bar នីមួយៗដើម្បីមើលចំនួន Assets ជាក់លាក់។" : "You can hover over each Bar to see the specific number of Assets."}</li>
+                </ol>
 
                 <Callout type="info" icon={<Gauge className="text-[#1D57C8]" />} title={isKhmer ? "ការគណនា Risk score" : "How risk score is calculated"}>
                     {isKhmer
@@ -211,23 +152,11 @@ GET /api/v1/dashboard/assets/most-vulnerable?\\
                         : "See patterns across all your scans — most-open ports, most-deployed services, and frequently exposed technologies."}
                 </Para>
 
-                <CodeBlock title="bash · top charts">
-                    {`# Top open ports
-GET /api/v1/dashboard/ports/top?limit=10
-
-# Top services
-GET /api/v1/dashboard/services/top?limit=10
-
-# Top technologies
-GET /api/v1/dashboard/technologies/top?limit=10
-
-# Sample response (top ports)
-[
-  {"port": 443, "protocol": "tcp", "count": 287},
-  {"port": 80,  "protocol": "tcp", "count": 245},
-  {"port": 22,  "protocol": "tcp", "count": 67}
-]`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "Top Charts UI" : "Top Charts UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "មាន Widgets សម្រាប់ Top 10 Open Ports, Top 10 Services និង Technologies។" : "There are Widgets for Top 10 Open Ports, Top 10 Services, and Technologies."}</li>
+                    <li>{isKhmer ? "ទិន្នន័យនេះជួយអ្នកដឹងថាតើ Service ណាដែលអ្នកបើកច្រើនជាងគេ។" : "This data helps you understand which Services you have exposed the most."}</li>
+                </ol>
 
                 <Callout type="info" icon={<Server className="text-[#1D57C8]" />} title={isKhmer ? "Aggregate count caveat" : "Aggregate count caveat"}>
                     {isKhmer

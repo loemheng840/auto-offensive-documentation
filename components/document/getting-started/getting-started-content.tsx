@@ -19,6 +19,7 @@ import Link from "next/link";
 import DocsFooterNav from "@/components/document/docs-footer-nav";
 
 const monoFontStyle = { fontFamily: "var(--docs-mono-font), monospace" } as const;
+const sansFontStyle = { fontFamily: "var(--docs-sans-font), sans-serif" } as const;
 
 /* ─── Primitives ─── */
 function InlineCode({ children }: { children: React.ReactNode }) {
@@ -52,6 +53,17 @@ function SectionHeading({ id, children }: { id: string; children: React.ReactNod
         >
             {children}
         </h2>
+    );
+}
+
+function SubHeading({ children }: { children: React.ReactNode }) {
+    return (
+        <h3
+            className="text-[1.2rem] md:text-[1.3rem] font-semibold tracking-[-0.02em] text-[#1A1714] dark:text-white mt-8 mb-3"
+            style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
+        >
+            {children}
+        </h3>
     );
 }
 
@@ -326,37 +338,21 @@ export default function GettingStartedContent() {
             {/* Step 1: Install */}
             <section id="install" className="doc-section scroll-mt-24 mb-12">
                 <SectionHeading id="install">
-                    {isKhmer ? "1. ដំឡើង CLI" : "1. Install the CLI"}
+                    {isKhmer ? "1. បង្កើតគណនី" : "1. Create an Account"}
                 </SectionHeading>
                 <Para>
                     {isKhmer
-                        ? "CLI (ហៅថា aof) គឺជា Go binary តែមួយដោយគ្មាន dependencies។ ដំឡើងវាដោយ command មួយ៖"
-                        : "The CLI (called aof) is a single Go binary with no dependencies. Install it with one command:"}
+                        ? "ចូលទៅកាន់វិបសាយដើម្បីបង្កើតគណនីរបស់អ្នក។"
+                        : "Go to the website to create your account."}
                 </Para>
 
-                <CodeBlock title="bash · Linux & macOS">
-                    {`# Download and install
-curl -sSL https://get.auto-offensive.com/install.sh | bash
-
-# Verify it's working
-aof --version
-# → aof version 1.2.0`}
-                </CodeBlock>
-
-                <Callout type="tip" icon={<Lightbulb className="text-[#1A7A4A]" />} title={isKhmer ? "Windows" : "Windows users"}>
-                    {isKhmer
-                        ? "ទាញយកឯកសារ .exe ពី releases page បន្ថែមវាទៅ folder មួយ ហើយបន្ថែម folder នោះទៅ PATH របស់អ្នក។"
-                        : "Download the .exe from the releases page, place it in a folder, and add that folder to your PATH."}
-                </Callout>
-
-                <Para>{isKhmer ? "បន្ទាប់មក សូមចូលគណនី៖" : "Then log in:"}</Para>
-
-                <CodeBlock title="bash · authenticate">
-                    {`aof login
-# → Opens browser for Keycloak OAuth
-# → ✓ Login successful
-# → Token saved to ~/.config/aof/token.json`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបចុះឈ្មោះតាម UI" : "Signing up via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រចុះឈ្មោះ (Sign Up)។" : "Navigate to the Sign Up page."}</li>
+                    <li>{isKhmer ? "បញ្ចូលអុីម៉ែល និងពាក្យសម្ងាត់របស់អ្នក។" : "Enter your email and password."}</li>
+                    <li>{isKhmer ? "ចុចប៊ូតុង 'Create Account'។" : "Click the 'Create Account' button."}</li>
+                    <li>{isKhmer ? "ពិនិត្យអុីម៉ែលរបស់អ្នកដើម្បីបញ្ជាក់គណនី។" : "Check your email to verify your account."}</li>
+                </ol>
             </section>
 
             {/* Step 2: First scan */}
@@ -366,36 +362,27 @@ aof --version
                 </SectionHeading>
                 <Para>
                     {isKhmer
-                        ? "បង្កើត project និងដាក់បញ្ជូន pipeline scan ដែលរក subdomains ហើយ probe ពួកវាសម្រាប់ HTTP services៖"
-                        : "Create a project and submit a pipeline scan that finds subdomains and probes them for HTTP services:"}
+                        ? "បង្កើត project និងដាក់បញ្ជូន scan តាមរយៈផ្ទាំងគ្រប់គ្រង (Dashboard)៖"
+                        : "Create a project and submit a scan through the Web Dashboard:"}
                 </Para>
 
-                <CodeBlock title="bash · create project & scan">
-                    {`# 1. Create a project
-aof projects create --name "Demo" --description "First scan"
-# → ✓ Project created. ID: proj_abc123
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចុចប៊ូតុង 'New Project' នៅជ្រុងខាងស្តាំខាងលើ។" : "Click the 'New Project' button at the top right."}</li>
+                    <li>{isKhmer ? "បញ្ចូលឈ្មោះ Project របស់អ្នក រួចចុចរក្សាទុក។" : "Enter your Project name and click save."}</li>
+                    <li>{isKhmer ? "ចូលទៅកាន់ Project នោះ ហើយចុច 'New Scan'។" : "Go into the Project and click 'New Scan'."}</li>
+                    <li>{isKhmer ? "បញ្ចូល Target (ឧ. example.com)។" : "Enter a Target (e.g., example.com)."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស Basic Mode រួចចុច Start Scan។" : "Select Basic Mode and click Start Scan."}</li>
+                </ol>
 
-# 2. Run a pipeline scan (Unix-style with escaped pipes)
-aof scan --project "Demo" "subfinder -d example.com \\| httpx -sc"
-# → ✓ Scan submitted: job_xyz789
-# → [subfinder] api.example.com
-# → [subfinder] www.example.com
-# → [httpx] https://api.example.com [200] [nginx]
-# → ✓ Scan finished in 12s`}
-                </CodeBlock>
-
-                <Callout type="info" icon={<Info className="text-[#1D57C8]" />} title={isKhmer ? "ហេតុអ្វីត្រូវ escape pipe?" : "Why escape the pipe?"}>
+                <Callout type="info" icon={<Info className="text-[#1D57C8]" />} title={isKhmer ? "ដំណើរការស្វ័យប្រវត្តិ" : "Automated process"}>
                     {isKhmer ? (
                         <>
-                            Local shell របស់អ្នកបកស្រាយ <InlineCode>|</InlineCode> ជា local pipe។
-                            ការបន្ថែម backslash (<InlineCode>\|</InlineCode>) បញ្ជូនវាទៅ <InlineCode>aof</InlineCode>{" "}
-                            ដោយដូចដើម ដូច្នេះ backend ដឹងថាត្រូវ chain tools នៅពីលើផ្លេតហ្វម។
+                            ប្រព័ន្ធនឹងដំណើរការ tools ស្វ័យប្រវត្តិ។ អ្នកគ្រាន់តែរង់ចាំមើលវឌ្ឍនភាពនៅលើអេក្រង់។
                         </>
                     ) : (
                         <>
-                            Your local shell would interpret <InlineCode>|</InlineCode> as a local pipe.
-                            Escaping with a backslash (<InlineCode>\|</InlineCode>) passes it through to{" "}
-                            <InlineCode>aof</InlineCode> intact, so the backend knows to chain the tools.
+                            The system will automatically chain the tools. You just need to wait and watch the progress on the screen.
                         </>
                     )}
                 </Callout>
@@ -408,27 +395,16 @@ aof scan --project "Demo" "subfinder -d example.com \\| httpx -sc"
                 </SectionHeading>
                 <Para>
                     {isKhmer
-                        ? "បន្ទាប់ពី scan បញ្ចប់ បញ្ជី findings ទាំងអស់៖"
-                        : "After the scan completes, list all findings:"}
+                        ? "បន្ទាប់ពី scan បញ្ចប់ អ្នកអាចមើលបញ្ជី findings ទាំងអស់៖"
+                        : "After the scan completes, you can view the list of all findings:"}
                 </Para>
 
-                <CodeBlock title="bash · list findings">
-                    {`aof findings list --project "Demo"
-
-# SEVERITY  HOST                  PORT  DETAILS
-# INFO      api.example.com       443   HTTP 200, nginx
-# INFO      www.example.com       443   HTTP 200, nginx
-# MEDIUM    mail.example.com      25    Open SMTP
-
-# Filter by severity
-aof findings list --project "Demo" --severity HIGH,CRITICAL`}
-                </CodeBlock>
-
-                <Para>
-                    {isKhmer
-                        ? "អ្នកក៏អាចមើលលទ្ធផលនៅក្នុង web dashboard បានដែរ ដើម្បីទទួលបាន AI analysis, generate reports, និងតាមដាន trends ឆ្លងពេលវេលា។"
-                        : "You can also view results in the web dashboard for AI analysis, report generation, and tracking trends over time."}
-                </Para>
+                <SubHeading>{isKhmer ? "ការមើលបញ្ហាតាម UI" : "Viewing findings via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅផ្ទាំង 'Findings' ឬ 'Issues' នៅក្នុងទំព័រលទ្ធផល Scan។" : "Go to the 'Findings' or 'Issues' tab on the Scan results page."}</li>
+                    <li>{isKhmer ? "អ្នកនឹងឃើញតារាងដែលបង្ហាញពីកម្រិតហានិភ័យ (Severity), Host, និងព័ត៌មានលម្អិត។" : "You will see a table showing the Severity, Host, and details."}</li>
+                    <li>{isKhmer ? "អ្នកអាចចុចលើបញ្ហានីមួយៗដើម្បីមើលពីវិធីដោះស្រាយ និង AI Analysis បន្ថែម។" : "You can click on each issue to see the remediation and additional AI Analysis."}</li>
+                </ol>
             </section>
 
             {/* Next steps */}

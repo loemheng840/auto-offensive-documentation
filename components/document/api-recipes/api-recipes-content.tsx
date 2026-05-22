@@ -934,7 +934,11 @@ export default function ApiRecipesContent() {
                         key={row.code}
                         className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white/95 dark:bg-[#101114] p-4"
                     >
-                        <div className="font-mono text-[12px] font-bold tracking-[0.04em] text-[#B86800] mb-1">
+                        <div className={`font-mono text-[14px] md:text-[15px] font-semibold tracking-[0.02em] mb-1 ${
+                            row.code.startsWith('401') || row.code.startsWith('403') || row.code.startsWith('404') || row.code.startsWith('413') || row.code.startsWith('5')
+                                ? 'text-red-600 dark:text-red-400'
+                                : 'text-amber-600 dark:text-amber-400'
+                        }`}>
                             {row.code}
                         </div>
                         <div className="text-[15px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65]">

@@ -40,7 +40,7 @@ function cx(...cls: (string | false | undefined | null)[]) {
 function Chip({ children }: { children: string }) {
   return (
     <code
-      className="font-mono text-[14px] md:text-[16px] lg:text-[18px] bg-[#00BCA1]/10 text-[#00BCA1] px-1.5 py-px rounded"
+      className="text-[14px] md:text-[15px] bg-[#00BCA1]/10 text-[#00BCA1] px-1.5 py-px rounded border border-[#00BCA1]/25"
       style={monoFontStyle}
     >
       {children}
@@ -100,31 +100,31 @@ function CodeBlock({ lang, code }: { lang: string; code: string }) {
     .replace(/(\/\/[^\n]*)/g, '<span style="color:rgba(255,255,255,.28)">$1</span>');
 
   return (
-    <div className="rounded-xl overflow-hidden my-3 shadow-lg bg-[#13161E] dark:bg-[#0A0C12]">
+    <div className="rounded-xl overflow-hidden my-4 border border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.14)]">
       {/* toolbar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-black/30 border-b border-white/5">
-        <div className="flex gap-1.25">
-          <div className="w-2.25 h-2.25 rounded-full bg-[#FF5F57]" />
-          <div className="w-2.25 h-2.25 rounded-full bg-[#FFBD2E]" />
-          <div className="w-2.25 h-2.25 rounded-full bg-[#28CA41]" />
+      <div className="flex items-center justify-between px-4 py-2 border-b border-white/6 bg-[#16181F]">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#28CA41]" />
         </div>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-white/25" style={monoFontStyle}>{lang}</span>
+        <span className="font-mono text-[11px] text-white/30 tracking-wider" style={monoFontStyle}>{lang}</span>
         <button
           onClick={copy}
-          className="font-mono text-[10px] text-white/30 hover:text-white/70 transition-colors cursor-pointer bg-transparent border-none"
+          className="font-mono text-[10px] text-white/30 hover:text-white/75 hover:bg-white/[0.07] px-2 py-0.5 rounded transition-all"
           style={monoFontStyle}
         >
           {copied ? "Copied!" : "Copy"}
         </button>
       </div>
       {/* code */}
-      <pre className="overflow-x-auto px-5 py-4 m-0">
+      <div className="bg-[#16181F] px-5 py-4 overflow-x-auto">
         <code
-          className="font-mono text-[16px] md:text-[18px] lg:text-[20px] leading-[1.85] text-white/65 whitespace-pre"
+          className="text-[14px] md:text-[15px] leading-[1.85] text-white/65 whitespace-pre block"
           style={monoFontStyle}
           dangerouslySetInnerHTML={{ __html: highlighted }}
         />
-      </pre>
+      </div>
     </div>
   );
 }
@@ -626,14 +626,12 @@ Content-Type: application/json`}
           </thead>
           <tbody>
             {[
-              { s: "200", sc: "text-emerald-600 dark:text-emerald-400", code: "success", m: isKhmer ? "Request បានបញ្ចប់ដោយជោគជ័យ" : "Request completed successfully" },
-              { s: "201", sc: "text-emerald-600 dark:text-emerald-400", code: "created", m: isKhmer ? "បានបង្កើត resource រួចរាល់ (project, scan, report)" : "Resource created (project, scan, report)" },
-              { s: "400", sc: "text-amber-600 dark:text-amber-400", code: "bad_request", m: isKhmer ? "Request parameters បាត់ ឬមិនត្រឹមត្រូវ" : "Missing or invalid request parameters" },
-              { s: "401", sc: "text-red-600 dark:text-red-400", code: "unauthorized", m: isKhmer ? "API key បាត់ ឬមិនត្រឹមត្រូវ" : "Missing or invalid API key" },
-              { s: "403", sc: "text-red-600 dark:text-red-400", code: "forbidden", m: isKhmer ? "Plan មិនអនុញ្ញាតសកម្មភាពនេះ" : "Plan does not allow this action" },
-              { s: "404", sc: "text-red-600 dark:text-red-400", code: "not_found", m: isKhmer ? "Project, scan ឬ report មិនមានទេ" : "Project, scan, or report does not exist" },
-              { s: "429", sc: "text-amber-600 dark:text-amber-400", code: "rate_limited", m: isKhmer ? "ដល់កម្រិត daily request ឬ scan limit ហើយ" : "Daily request or scan limit reached" },
-              { s: "500", sc: "text-red-600 dark:text-red-400", code: "server_error", m: isKhmer ? "Internal server error សូមសាកល្បងម្ដងទៀតពេលក្រោយ" : "Internal server error - try again later" },
+              { s: "400", sc: "text-amber-600 dark:text-amber-400", code: "ERR_INVALID_PARAM", m: isKhmer ? "Request parameters បាត់ ឬមិនត្រឹមត្រូវ" : "Missing or invalid request parameters" },
+              { s: "401", sc: "text-red-600 dark:text-red-400", code: "ERR_AUTH_FAILED", m: isKhmer ? "API key បាត់ ឬមិនត្រឹមត្រូវ" : "Missing or invalid API key" },
+              { s: "403", sc: "text-red-600 dark:text-red-400", code: "ERR_FORBIDDEN", m: isKhmer ? "Plan មិនអនុញ្ញាតសកម្មភាពនេះ" : "Plan does not allow this action" },
+              { s: "404", sc: "text-red-600 dark:text-red-400", code: "ERR_NOT_FOUND", m: isKhmer ? "Project, scan ឬ report មិនមានទេ" : "Project, scan, or report does not exist" },
+              { s: "429", sc: "text-amber-600 dark:text-amber-400", code: "ERR_QUOTA_EXCEEDED", m: isKhmer ? "ដល់កម្រិត daily request ឬ scan limit ហើយ" : "Daily request or scan limit reached" },
+              { s: "500", sc: "text-red-600 dark:text-red-400", code: "ERR_SERVER_ERROR", m: isKhmer ? "Internal server error សូមសាកល្បងម្ដងទៀតពេលក្រោយ" : "Internal server error - try again later" },
             ].map((r, i, arr) => (
               <tr key={r.code} className={i < arr.length - 1 ? "border-b border-[#F0EDE7] dark:border-white/5" : ""}>
                 <td className={`px-4 py-3 font-mono text-[16px] md:text-[18px] lg:text-[20px] font-semibold ${r.sc}`}>{r.s}</td>
@@ -648,7 +646,7 @@ Content-Type: application/json`}
       <CodeBlock
         lang={isKhmer ? "Error Response Example" : "Error Response Example"}
         code={`{
-  "code": "rate_limited",
+  "code": "ERR_QUOTA_EXCEEDED",
   "message": "Daily scan limit reached. Resets at 00:00 UTC.",
   "status": 429
 }`}
@@ -1029,6 +1027,114 @@ Content-Type: application/json`}
   "download_url": "https://cdn.autooffensive.com/reports/rpt_04MN...pdf?token=...",
   "expires_at": "2025-03-14T09:25:00Z",
   "format": "pdf"
+}`,
+        }}
+      />
+
+      <Divider />
+
+      {/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+          ISSUES
+      ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */}
+      <H2 id="issues" title={isKhmer ? "Issues" : "Issues"} tag={isKhmer ? "Endpoints" : "Endpoints"} />
+      <Para>
+        {isKhmer
+          ? "ទាញយកបញ្ជី vulnerabilities និង issues ដែលបានរកឃើញនៅក្នុងការស្កេនរបស់អ្នក។"
+          : "Retrieve the detailed list of vulnerabilities and issues found during your scans."}
+      </Para>
+
+      <Endpoint
+        id="issues-list"
+        method="GET"
+        path={<P><span>/scans/</span><Param>{"{scan_id}"}</Param><span>/issues</span></P>}
+        badges={<PlanBadge type="auth" label={authRequiredLabel} />}
+        desc={isKhmer ? "ត្រឡប់បញ្ជី vulnerabilities ទាំងអស់ពី scan មួយ។ អាចច្រោះតាម severity។" : "Fetch the detailed list of vulnerabilities found during a scan. Can be filtered by severity."}
+        queryParams={[
+          { name: "severity", type: "string", required: false, desc: isKhmer ? <>ច្រោះតាម severity: <Chip>critical</Chip> <Chip>high</Chip> <Chip>medium</Chip> <Chip>low</Chip></> : <>Filter by severity: <Chip>critical</Chip> <Chip>high</Chip> <Chip>medium</Chip> <Chip>low</Chip></> },
+          { name: "cursor", type: "string", required: false, desc: isKhmer ? "Pagination cursor សម្រាប់ការទាញយកទំព័របន្ទាប់" : "Pagination cursor for fetching the next page" },
+        ]}
+        code={{
+          lang: responseLabel,
+          body: `{
+  "data": [
+    {
+      "id": "issue_987",
+      "severity": "high",
+      "type": "SQL Injection",
+      "file": "src/db/queries.ts",
+      "line": 42,
+      "description": "Unsanitized input passed directly to SQL execution context."
+    }
+  ],
+  "meta": {
+    "next_cursor": null
+  }
+}`,
+        }}
+      />
+
+      <Divider />
+
+      {/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+          AI ANALYSIS
+      ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */}
+      <H2 id="ai-analysis" title={isKhmer ? "AI Analysis" : "AI Analysis"} tag={isKhmer ? "Endpoints" : "Endpoints"} />
+      <Para>
+        {isKhmer
+          ? "ទាក់ទងជាមួយ AI engine ដើម្បីស្នើសុំវិធីសាស្ត្រជួសជុលបញ្ហាសុវត្ថិភាព។"
+          : "Interact with the AI engine for vulnerability remediation suggestions."}
+      </Para>
+
+      <Endpoint
+        id="ai-remediate"
+        method="POST"
+        path={<P><span>/issues/</span><Param>{"{issue_id}"}</Param><span>/remediate</span></P>}
+        badges={<><PlanBadge type="auth" label={authRequiredLabel} /><PlanBadge type="team" label={teamPlanLabel} /></>}
+        desc={isKhmer ? "ស្នើសុំ AI engine ឱ្យបង្កើតវិធីសាស្ត្រជួសជុលសម្រាប់ issue ជាក់លាក់មួយ។" : "Ask the AI engine to generate a fix for a specific issue."}
+        code={{
+          lang: responseLabel,
+          body: `{
+  "issue_id": "issue_987",
+  "suggestion": "Use parameterized queries to prevent SQL injection.",
+  "code_snippet": "const query = 'SELECT * FROM users WHERE id = $1';\\nawait db.query(query, [userId]);"
+}`,
+        }}
+      />
+
+      {/* •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+          WEBHOOKS
+      ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */}
+      <H2 id="webhooks" title={isKhmer ? "Webhooks" : "Webhooks"} tag={isKhmer ? "Endpoints" : "Endpoints"} />
+      <Para>
+        {isKhmer
+          ? "ចុះឈ្មោះ webhooks ដើម្បីទទួលបានការជូនដំណឹង (notifications) ពេលមានព្រឹត្តិការណ៍សំខាន់ៗដូចជា scan បញ្ចប់។"
+          : "Register webhooks to receive real-time notifications for events like scan completion."}
+      </Para>
+
+      <Endpoint
+        id="webhook-create"
+        method="POST"
+        path={<P><span>/projects/</span><Param>{"{project_id}"}</Param><span>/webhooks</span></P>}
+        badges={<PlanBadge type="auth" label={authRequiredLabel} />}
+        desc={isKhmer ? "បង្កើត webhook ថ្មីដើម្បីទទួលបាន payloads នៅពេលព្រឹត្តិការណ៍ជាក់លាក់កើតឡើង។" : "Create a new webhook to receive payloads when specific events occur."}
+        bodyParams={[
+          { name: "url", type: "string", required: true, desc: isKhmer ? "URL ដែលទទួល POST requests" : "The destination URL that will receive POST requests" },
+          { name: "events", type: "array", required: true, desc: isKhmer ? <>ព្រឹត្តិការណ៍ដូចជា: <Chip>scan.completed</Chip> <Chip>scan.failed</Chip> <Chip>report.ready</Chip></> : <>Array of events like: <Chip>scan.completed</Chip> <Chip>scan.failed</Chip> <Chip>report.ready</Chip></> },
+          { name: "secret", type: "string", required: false, desc: isKhmer ? "Secret key សម្រាប់ផ្ទៀងផ្ទាត់ payload signature" : "Secret key for verifying payload signatures" },
+        ]}
+        code={{
+          lang: requestResponseLabel,
+          body: `// Request
+{
+  "url": "https://your-domain.com/webhooks/aof",
+  "events": ["scan.completed", "report.ready"],
+  "secret": "wh_secret_xyz123"
+}
+
+// Response 201
+{
+  "webhook_id": "wh_05OP...",
+  "status": "active"
 }`,
         }}
       />

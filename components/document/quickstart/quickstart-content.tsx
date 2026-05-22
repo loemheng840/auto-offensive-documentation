@@ -229,17 +229,17 @@ export default function QuickstartContent() {
                     <ol className="space-y-2">
                         {(isKhmer
                             ? [
-                                "ដំឡើង aof CLI",
-                                "ចូលជាមួយគណនី Auto-Offensive របស់អ្នក",
+                                "ចុះឈ្មោះប្រើប្រាស់គណនី Auto-Offensive",
+                                "ចូលទៅកាន់ Web Dashboard",
                                 "បង្កើត project ដើម្បីរៀបចំការងាររបស់អ្នក",
-                                "ដំណើរការ pipeline scan ពីរ tools",
+                                "ដំណើរការ scan",
                                 "មើល findings",
                             ]
                             : [
-                                "Install the aof CLI",
-                                "Log in with your Auto-Offensive account",
+                                "Sign up for an Auto-Offensive account",
+                                "Log in to the Web Dashboard",
                                 "Create a project to organize your work",
-                                "Run a two-tool pipeline scan",
+                                "Run a scan",
                                 "View the findings",
                             ]
                         ).map((line, i) => (
@@ -281,51 +281,22 @@ export default function QuickstartContent() {
                 <StepHeading
                     num={1}
                     icon={<HardDriveDownload />}
-                    title={isKhmer ? "ដំឡើង" : "Install"}
+                    title={isKhmer ? "ចុះឈ្មោះប្រើប្រាស់" : "Sign Up"}
                 />
                 <Para>
                     {isKhmer
-                        ? "ទាញយក និងដំឡើង CLI សម្រាប់ platform របស់អ្នក។"
-                        : "Download and install the CLI for your platform."}
+                        ? "ចូលទៅកាន់វិបសាយដើម្បីបង្កើតគណនីរបស់អ្នក។"
+                        : "Go to the website to create your account."}
                 </Para>
 
-                <CodeBlock title="bash · Linux & macOS">
-                    <Cm># Linux / macOS{"\n"}</Cm>
-                    <Prompt />
-                    <Cmd>curl</Cmd> <Flag>-sSL</Flag>{" "}
-                    <Val>https://get.auto-offensive.com/install.sh</Val>{" "}
-                    <Dim>|</Dim> bash{"\n\n"}
-                    <Cm># Verify it works{"\n"}</Cm>
-                    <Prompt />
-                    <Cmd>aof</Cmd> version{"\n"}
-                    <Dim>aof version 1.2.0</Dim>
-                </CodeBlock>
-
-                <Para>
-                    {isKhmer ? (
-                        <>
-                            អ្នកនឹងឃើញ output ដូចជា <InlineCode>aof version 1.2.0</InlineCode>។
-                            Installer បន្ថែម <InlineCode>aof</InlineCode> ទៅ PATH របស់អ្នកដោយ
-                            ស្វ័យប្រវត្តិ។
-                        </>
-                    ) : (
-                        <>
-                            You&apos;ll see output like <InlineCode>aof version 1.2.0</InlineCode>.
-                            The installer adds <InlineCode>aof</InlineCode> to your PATH
-                            automatically.
-                        </>
-                    )}
-                </Para>
-
-                <Callout
-                    type="tip"
-                    icon={<Info className="text-[#1A7A4A]" />}
-                    title={isKhmer ? "Windows" : "Windows users"}
-                >
-                    {isKhmer
-                        ? "ទាញយក .exe ពី releases page ដាក់វាក្នុង folder មួយ ហើយបន្ថែម folder នោះទៅ PATH របស់អ្នក។"
-                        : "Download the .exe from the releases page, place it in a folder, and add that folder to your PATH."}
-                </Callout>
+                <div className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#101114] p-5 my-4">
+                    <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4]" style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}>
+                        <li>{isKhmer ? "ចូលទៅកាន់ទំព័រចុះឈ្មោះ (Sign Up)។" : "Navigate to the Sign Up page."}</li>
+                        <li>{isKhmer ? "បញ្ចូលអុីម៉ែល និងពាក្យសម្ងាត់របស់អ្នក។" : "Enter your email and password."}</li>
+                        <li>{isKhmer ? "ចុចប៊ូតុង 'Create Account'។" : "Click the 'Create Account' button."}</li>
+                        <li>{isKhmer ? "ពិនិត្យអុីម៉ែលរបស់អ្នកដើម្បីបញ្ជាក់គណនី។" : "Check your email to verify your account."}</li>
+                    </ol>
+                </div>
             </section>
 
             {/* STEP 2 */}
@@ -333,27 +304,21 @@ export default function QuickstartContent() {
                 <StepHeading
                     num={2}
                     icon={<LogIn />}
-                    title={isKhmer ? "ចូល" : "Log in"}
+                    title={isKhmer ? "ចូលប្រើប្រាស់" : "Log in"}
                 />
                 <Para>
                     {isKhmer
-                        ? "ផ្ទៀងផ្ទាត់ជាមួយគណនី Auto-Offensive របស់អ្នក។"
-                        : "Authenticate with your Auto-Offensive account."}
+                        ? "ចូលទៅកាន់ Web Dashboard របស់អ្នក។"
+                        : "Log in to your Web Dashboard."}
                 </Para>
 
-                <CodeBlock title="bash · login flow">
-                    <Prompt />
-                    <Cmd>aof</Cmd> login{"\n\n"}
-                    <Dim>Opening browser for authentication...{"\n"}</Dim>
-                    <Ok /> <Dim>Login successful{"\n"}</Dim>
-                    <Dim>Token saved to ~/.config/aof/token.json</Dim>
-                </CodeBlock>
-
-                <Para>
-                    {isKhmer
-                        ? "បញ្ជានេះបើក browser របស់អ្នកដើម្បីបញ្ចប់ការចូល OAuth។ CLI រក្សាទុក token របស់អ្នកនៅក្នុងម៉ាស៊ីន ហើយ refresh វាដោយស្វ័យប្រវត្តិ។ អ្នកនៅតែបានចូល រហូតដល់អ្នកដំណើរការ aof logout។"
-                        : "This opens your browser to complete the OAuth login. The CLI stores your token locally and refreshes it automatically. You stay logged in until you run aof logout."}
-                </Para>
+                <div className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#101114] p-5 my-4">
+                    <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4]" style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}>
+                        <li>{isKhmer ? "បញ្ចូលអុីម៉ែល និងពាក្យសម្ងាត់របស់អ្នក។" : "Enter your email and password."}</li>
+                        <li>{isKhmer ? "ចុចប៊ូតុង 'Log In'។" : "Click the 'Log In' button."}</li>
+                        <li>{isKhmer ? "អ្នកនឹងឃើញទំព័រ Dashboard ផ្ទាល់ខ្លួនរបស់អ្នក។" : "You will see your personal Dashboard."}</li>
+                    </ol>
+                </div>
             </section>
 
             {/* STEP 3 */}
@@ -369,22 +334,13 @@ export default function QuickstartContent() {
                         : "Projects organize your scans and findings. Create one for this demo:"}
                 </Para>
 
-                <CodeBlock title="bash · create project">
-                    <Prompt />
-                    <Cmd>aof</Cmd> projects create <Flag>--name</Flag>{" "}
-                    <Val>&quot;Demo&quot;</Val> <Flag>--description</Flag>{" "}
-                    <Val>&quot;Quickstart test project&quot;</Val>
-                    {"\n\n"}
-                    <Ok /> <Dim>Project created{"\n"}</Dim>
-                    <Dim>ID: proj-abc123{"\n"}</Dim>
-                    <Dim>Name: Demo</Dim>
-                </CodeBlock>
-
-                <Para>
-                    {isKhmer
-                        ? "CLI ចងចាំនេះថាជា project ដែលអ្នកប្រើចុងក្រោយ ដូច្នេះអ្នកមិនចាំបាច់បញ្ជាក់វារៀងរាល់ពេលឡើយ។"
-                        : "The CLI remembers this as your last-used project, so you don't need to specify it every time."}
-                </Para>
+                <div className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#101114] p-5 my-4">
+                    <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4]" style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}>
+                        <li>{isKhmer ? "ចុចប៊ូតុង 'New Project' នៅជ្រុងខាងស្តាំខាងលើ។" : "Click the 'New Project' button at the top right."}</li>
+                        <li>{isKhmer ? "បញ្ចូលឈ្មោះ Project របស់អ្នក (ឧ. 'Demo')។" : "Enter your Project name (e.g., 'Demo')."}</li>
+                        <li>{isKhmer ? "ចុចរក្សាទុក (Save)។" : "Click Save."}</li>
+                    </ol>
+                </div>
             </section>
 
             {/* STEP 4 */}
@@ -397,66 +353,23 @@ export default function QuickstartContent() {
                 <Para>
                     {isKhmer ? (
                         <>
-                            ឥឡូវនេះដំណើរការ pipeline ដែលភ្ជាប់ tools ពីរ —{" "}
-                            <InlineCode>subfinder</InlineCode> រកឃើញ subdomains បន្ទាប់មក{" "}
-                            <InlineCode>httpx</InlineCode> probe ពួកវានីមួយៗសម្រាប់ HTTP services៖
+                            ឥឡូវនេះដំណើរការ scan តាមរយៈ UI ដែលនឹងរកឃើញ subdomains និង probe ពួកវានីមួយៗសម្រាប់ HTTP services៖
                         </>
                     ) : (
                         <>
-                            Now run a pipeline that chains two tools —{" "}
-                            <InlineCode>subfinder</InlineCode> finds subdomains, then{" "}
-                            <InlineCode>httpx</InlineCode> probes each one for HTTP services:
+                            Now run a scan via the UI that finds subdomains and probes each one for HTTP services:
                         </>
                     )}
                 </Para>
 
-                <CodeBlock title="bash · pipeline scan">
-                    <Prompt />
-                    <Cmd>aof</Cmd> scan <Flag>--project</Flag> <Val>&quot;Demo&quot;</Val>{" "}
-                    <Val>&quot;subfinder -d example.com | httpx -sc&quot;</Val>
-                </CodeBlock>
-
-                <Para>
-                    {isKhmer
-                        ? "អ្នកនឹងឃើញ output ផ្ទាល់ដូច scan ដំណើរការ៖"
-                        : "You'll see live output as the scan runs:"}
-                </Para>
-
-                <CodeBlock title="live output">
-                    <Ok /> <Dim>Scan submitted: job-xyz789{"\n\n"}</Dim>
-                    <Dim>[subfinder] Starting...{"\n"}</Dim>
-                    <Dim>[subfinder] www.example.com{"\n"}</Dim>
-                    <Dim>[subfinder] api.example.com{"\n"}</Dim>
-                    <Dim>[subfinder] mail.example.com{"\n"}</Dim>
-                    <Dim>[subfinder] </Dim>
-                    <Ok /> <Dim>Completed (3 results){"\n\n"}</Dim>
-                    <Dim>[httpx] Starting...{"\n"}</Dim>
-                    <Dim>[httpx] https://www.example.com [200] [nginx/1.18.0]{"\n"}</Dim>
-                    <Dim>[httpx] https://api.example.com [200] [nginx/1.18.0]{"\n"}</Dim>
-                    <Dim>[httpx] https://mail.example.com [301] [redirect]{"\n"}</Dim>
-                    <Dim>[httpx] </Dim>
-                    <Ok /> <Dim>Completed (3 results){"\n\n"}</Dim>
-                    <Ok /> <Dim>Scan finished in 12s</Dim>
-                </CodeBlock>
-
-                <Para>
-                    {isKhmer ? (
-                        <>
-                            Tool នីមួយៗដំណើរការតាមលំដាប់។ Output ពី{" "}
-                            <InlineCode>subfinder</InlineCode> (បញ្ជី subdomains) ហូរទៅក្នុង{" "}
-                            <InlineCode>httpx</InlineCode> ដោយផ្ទាល់ ដែលធ្វើតេស្តពួកវាម្នាក់ៗ។
-                            អ្នកមិនចាំបាច់ copy-paste លទ្ធផលរវាង tools — pipeline ដោះស្រាយវា។
-                        </>
-                    ) : (
-                        <>
-                            Each tool runs in order. Output from{" "}
-                            <InlineCode>subfinder</InlineCode> (the list of subdomains) flows
-                            directly into <InlineCode>httpx</InlineCode>, which tests each one.
-                            You don&apos;t copy-paste results between tools — the pipeline
-                            handles it.
-                        </>
-                    )}
-                </Para>
+                <div className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#101114] p-5 my-4">
+                    <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4]" style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}>
+                        <li>{isKhmer ? "ចូលទៅកាន់ Project ដែលអ្នកទើបតែបង្កើត ហើយចុច 'New Scan'។" : "Go into the Project you just created and click 'New Scan'."}</li>
+                        <li>{isKhmer ? "បញ្ចូល Target (ឧ. example.com)។" : "Enter a Target (e.g., example.com)."}</li>
+                        <li>{isKhmer ? "ជ្រើសរើស Basic Mode រួចចុច Start Scan។" : "Select Basic Mode and click Start Scan."}</li>
+                        <li>{isKhmer ? "រង់ចាំមើលដំណើរការស្កេនដែលបង្ហាញនៅលើអេក្រង់។" : "Wait and watch the scan progress displayed on the screen."}</li>
+                    </ol>
+                </div>
             </section>
 
             {/* STEP 5 */}
@@ -468,15 +381,17 @@ export default function QuickstartContent() {
                 />
                 <Para>
                     {isKhmer
-                        ? "បញ្ជី findings ពី scan របស់អ្នក៖"
-                        : "List the findings from your scan:"}
+                        ? "អ្នកអាចមើលបញ្ជី findings ពី scan របស់អ្នកនៅក្នុង UI៖"
+                        : "You can view the list of findings from your scan in the UI:"}
                 </Para>
 
-                <CodeBlock title="bash · list findings">
-                    <Prompt />
-                    <Cmd>aof</Cmd> findings list <Flag>--project</Flag>{" "}
-                    <Val>&quot;Demo&quot;</Val>
-                </CodeBlock>
+                <div className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#101114] p-5 my-4">
+                    <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4]" style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}>
+                        <li>{isKhmer ? "ចូលទៅផ្ទាំង 'Findings' ឬ 'Issues' នៅក្នុងទំព័រលទ្ធផល Scan។" : "Go to the 'Findings' or 'Issues' tab on the Scan results page."}</li>
+                        <li>{isKhmer ? "អ្នកនឹងឃើញតារាងដែលបង្ហាញពីកម្រិតហានិភ័យ (Severity), Host, និងព័ត៌មានលម្អិត។" : "You will see a table showing the Severity, Host, and details."}</li>
+                        <li>{isKhmer ? "អ្នកអាចប្រើមុខងារតម្រង (Filter) របស់ UI ដើម្បីមើលតែបញ្ហាដែលមានហានិភ័យខ្ពស់បាន។" : "You can use the UI's filter function to view only high-risk issues."}</li>
+                    </ol>
+                </div>
 
                 {/* Findings table preview */}
                 <div className="overflow-x-auto my-4 rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#101114]">
@@ -553,86 +468,7 @@ export default function QuickstartContent() {
                         : "Each row is a finding — something the scan discovered. In this case, three live HTTPS services. Real scans produce findings with higher severity (vulnerabilities, exposed services, misconfigurations)."}
                 </Para>
 
-                <Para>
-                    {isKhmer ? "អ្នកអាចត្រងតាម severity, host ឬ port៖" : "You can filter by severity, host, or port:"}
-                </Para>
 
-                <CodeBlock title="bash · filter findings">
-                    <Prompt />
-                    <Cmd>aof</Cmd> findings list <Flag>--project</Flag>{" "}
-                    <Val>&quot;Demo&quot;</Val> <Flag>--severity</Flag>{" "}
-                    <Val>CRITICAL</Val>
-                </CodeBlock>
-            </section>
-
-            {/* Common issue */}
-            <section id="troubleshooting" className="doc-section scroll-mt-24 mb-12">
-                <h2
-                    className="text-[1.55rem] md:text-[1.7rem] font-bold tracking-[-0.025em] text-[#1A1714] dark:text-white mb-3 pt-2 flex items-center gap-2.5"
-                    style={{ fontFamily: "var(--docs-sans-font), sans-serif" }}
-                >
-                    {isKhmer ? "បញ្ហាទូទៅ៖ Login បរាជ័យ" : "Common issue: Login fails"}
-                </h2>
-
-                <div className="rounded-2xl border border-[#E2DDD5] dark:border-white/10 bg-white/95 dark:bg-[#101114] p-5 md:p-6 space-y-3">
-                    <div className="flex items-start gap-3">
-                        <AlertTriangle className="size-4 mt-1 text-[#B86800] shrink-0" />
-                        <div>
-                            <p className="text-[11px] font-bold uppercase tracking-[0.07em] text-[#B86800] mb-1">
-                                {isKhmer ? "រោគសញ្ញា" : "Symptom"}
-                            </p>
-                            <p className="text-[15px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65]">
-                                {isKhmer
-                                    ? "Browser បើកប៉ុន្តែបង្ហាញ \"Unable to connect\" ឬ \"Redirect failed\"។"
-                                    : 'Browser opens but shows "Unable to connect" or "Redirect failed."'}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <Info className="size-4 mt-1 text-[#1D57C8] shrink-0" />
-                        <div>
-                            <p className="text-[11px] font-bold uppercase tracking-[0.07em] text-[#1D57C8] mb-1">
-                                {isKhmer ? "មូលហេតុ" : "Cause"}
-                            </p>
-                            <p className="text-[15px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65]">
-                                {isKhmer ? (
-                                    <>
-                                        CLI ចាប់ផ្តើម local callback server នៅ{" "}
-                                        <InlineCode>http://localhost:8085/callback</InlineCode>។ ប្រសិនបើ
-                                        process ផ្សេងកំពុងប្រើ port នោះ login នឹងបរាជ័យ។
-                                    </>
-                                ) : (
-                                    <>
-                                        The CLI starts a local callback server on{" "}
-                                        <InlineCode>http://localhost:8085/callback</InlineCode>. If
-                                        another process is using that port, login fails.
-                                    </>
-                                )}
-                            </p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <CheckCircle2 className="size-4 mt-1 text-[#1A7A4A] shrink-0" />
-                        <div className="flex-1">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.07em] text-[#1A7A4A] mb-1">
-                                {isKhmer ? "ដំណោះស្រាយ" : "Fix"}
-                            </p>
-                            <p className="text-[15px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65] mb-2">
-                                {isKhmer
-                                    ? "បញ្ឈប់ process ដែលប៉ះទង្គិចគ្នា ឬកំណត់ port ផ្ទាល់ខ្លួន៖"
-                                    : "Stop the conflicting process, or set a custom port:"}
-                            </p>
-                            <CodeBlock title="bash · custom port">
-                                <Prompt />
-                                <Cmd>export</Cmd> AOF_REDIRECT_URL=
-                                <Val>http://localhost:9999/callback</Val>
-                                {"\n"}
-                                <Prompt />
-                                <Cmd>aof</Cmd> login
-                            </CodeBlock>
-                        </div>
-                    </div>
-                </div>
             </section>
 
             {/* Next steps */}

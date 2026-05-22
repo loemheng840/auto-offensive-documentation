@@ -767,8 +767,12 @@ const ErrorReference: React.FC = () => {
             <tbody>
               {copy.rows.map((err, idx) => (
                 <tr key={idx} className="border-t border-[#E2DDD5] dark:border-white/10 hover:bg-[#EAE6DE] dark:hover:bg-white/5 transition-colors">
-                  <td className={`px-4 py-3 ${monoTextClass} text-[#1A1714] dark:text-white whitespace-nowrap`} style={monoFontStyle}>{err.code}</td>
-                  <td className={`px-4 py-3 ${monoTextClass} text-[#88837B] dark:text-[#A1A1AA] whitespace-nowrap`} style={monoFontStyle}>{err.http}</td>
+                  <td className={`px-4 py-3 ${monoTextClass} text-[#00BCA1] font-semibold whitespace-nowrap`} style={monoFontStyle}>{err.code}</td>
+                  <td className={`px-4 py-3 ${monoTextClass} ${
+                    err.http.startsWith('401') || err.http.startsWith('403') || err.http.startsWith('404') || err.http.startsWith('422') || err.http.startsWith('5') 
+                      ? 'text-red-600 dark:text-red-400'
+                      : 'text-amber-600 dark:text-amber-400'
+                  } font-semibold whitespace-nowrap`} style={monoFontStyle}>{err.http}</td>
                   <td className={`px-4 py-3 ${bodyTextClass} text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap`}>{err.meaning}</td>
                   <td className={`px-4 py-3 ${bodyTextClass} text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap`}>{err.resolution}</td>
                 </tr>

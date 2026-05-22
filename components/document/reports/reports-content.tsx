@@ -69,27 +69,13 @@ export default function ReportsContent() {
                         : "Generate a report from a scan job with POST /reports/generate. The report is stored on the platform and can be downloaded later."}
                 </Para>
 
-                <CodeBlock title="bash · POST /reports/generate">
-                    {`curl -X POST https://api.auto-offensive.com/reports/generate \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "job_id": "job_xyz789",
-    "format": "pdf",
-    "step_scope": "all"
-  }'
-
-# Response (metadata)
-{
-  "report_id": "rep_a1b2c3",
-  "job_id": "job_xyz789",
-  "format": "pdf",
-  "file_name": "Demo-2026-05-20.pdf",
-  "content_type": "application/pdf",
-  "size_bytes": 247318,
-  "created_at": "2026-05-20T10:32:00Z"
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រលម្អិតនៃ Scan របស់អ្នក។" : "Navigate to your Scan details page."}</li>
+                    <li>{isKhmer ? "ចុចលើប៊ូតុង 'Export Report' នៅផ្នែកខាងលើ។" : "Click the 'Export Report' button at the top."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស Format ដែលអ្នកចង់បាន (ឧទាហរណ៍ PDF ឬ DOCX)។" : "Select your desired Format (e.g., PDF or DOCX)."}</li>
+                    <li>{isKhmer ? "ចុចប៊ូតុង 'Generate' ហើយរង់ចាំរហូតដល់វាទាញយកដោយស្វ័យប្រវត្តិ។" : "Click 'Generate' and wait for it to download automatically."}</li>
+                </ol>
 
                 <Callout type="info" icon={<Info className="text-[#1D57C8]" />} title={isKhmer ? "Async generation" : "Async generation"}>
                     {isKhmer
@@ -174,21 +160,12 @@ export default function ReportsContent() {
                     ]}
                 />
 
-                <CodeBlock title="bash · narrow scope">
-                    {`# Only the nuclei step, only severity columns
-curl -X POST https://api.auto-offensive.com/reports/generate \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "job_id": "job_xyz789",
-    "format": "xlsx",
-    "step_scope": "specific",
-    "step_ids": ["step_nuclei_1"],
-    "columns": {
-      "nuclei": ["host", "severity", "template_id", "matched_at"]
-    }
-  }'`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ការកំណត់ Scope តាម UI" : "Setting Scope via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "មុនពេលចុច Generate សូមចុចលើ 'Advanced Options'។" : "Before clicking Generate, click on 'Advanced Options'."}</li>
+                    <li>{isKhmer ? "អ្នកអាចដោះធីក (uncheck) ជំហាន ឬ columns ដែលអ្នកមិនចង់បង្ហាញ។" : "You can uncheck steps or columns that you do not want to include."}</li>
+                    <li>{isKhmer ? "របាយការណ៍នឹងត្រូវបានបង្កើតតាមអ្វីដែលអ្នកបានជ្រើសរើសប៉ុណ្ណោះ។" : "The report will be generated only with your selections."}</li>
+                </ol>
 
                 <Callout type="info" icon={<Filter className="text-[#1D57C8]" />} title={isKhmer ? "Row capping" : "Row capping"}>
                     {isKhmer
@@ -206,19 +183,12 @@ curl -X POST https://api.auto-offensive.com/reports/generate \\
                         : "Reports are stored against your account. List, download, or delete them via REST API:"}
                 </Para>
 
-                <CodeBlock title="bash · report management">
-                    {`# List all your reports (paginated, filterable)
-GET /reports?page=1&page_size=20&format=pdf
-
-# Get metadata for a single report
-GET /reports/{report_id}
-
-# Download the file
-GET /reports/{report_id}/download
-
-# Delete a stored report (does NOT delete the underlying scan)
-DELETE /reports/{report_id}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "គ្រប់គ្រងតាម UI" : "Managing via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រ 'Reports' ពីបញ្ជីខាងឆ្វេង (sidebar)។" : "Go to the 'Reports' page from the left sidebar."}</li>
+                    <li>{isKhmer ? "អ្នកនឹងឃើញតារាងរបាយការណ៍ទាំងអស់ដែលធ្លាប់បានបង្កើត។" : "You will see a table of all previously generated reports."}</li>
+                    <li>{isKhmer ? "អ្នកអាចទាញយកពួកវាម្តងទៀត ឬចុចប៊ូតុង 'Delete' ដើម្បីលុបវាចោល។" : "You can download them again or click the 'Delete' button to remove them."}</li>
+                </ol>
 
                 <SubHeading>{isKhmer ? "Filtering" : "Filtering"}</SubHeading>
                 <Para>

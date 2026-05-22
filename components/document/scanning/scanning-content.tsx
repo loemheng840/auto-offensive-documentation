@@ -216,34 +216,15 @@ export default function ScanningContent() {
                         : "A basic scan runs a single tool with default options. It's the fastest way to test a target."}
                 </Para>
 
-                <SubHeading>{isKhmer ? "ឧទាហរណ៍ — CLI" : "Example — CLI"}</SubHeading>
-                <CodeBlock title="bash · basic scan via CLI">
-                    {`# Find subdomains for a domain
-aof scan --project "Demo" --mode basic subfinder -d example.com
-
-# Quick HTTP probe
-aof scan --project "Demo" --mode basic httpx -u https://example.com`}
-                </CodeBlock>
-
-                <SubHeading>{isKhmer ? "ឧទាហរណ៍ — REST API" : "Example — REST API"}</SubHeading>
-                <CodeBlock title="bash · POST /scans/basic/submit">
-                    {`curl -X POST https://api.auto-offensive.com/scans/basic/submit \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "project_id": "proj_abc123",
-    "target": "example.com",
-    "tool": "subfinder"
-  }'
-
-# Response
-{
-  "job_id": "job_xyz789",
-  "project_id": "proj_abc123",
-  "status": "JOB_STATUS_QUEUED",
-  "steps": [{"step_id": "step_1", "tool": "subfinder", "status": "JOB_STATUS_QUEUED"}]
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រ Scans ពី sidebar។" : "Navigate to the Scans page from the sidebar."}</li>
+                    <li>{isKhmer ? "ចុចលើប៊ូតុង New Scan។" : "Click the New Scan button."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស Basic សម្រាប់ scan mode។" : "Select Basic as the scan mode."}</li>
+                    <li>{isKhmer ? "បញ្ចូល target របស់អ្នក (ឧទាហរណ៍ example.com)។" : "Enter your target (e.g., example.com)."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស tool មួយពី dropdown (ឧទាហរណ៍ subfinder)។" : "Choose a tool from the dropdown (e.g., subfinder)."}</li>
+                    <li>{isKhmer ? "ចុច Submit Scan។" : "Click Submit Scan."}</li>
+                </ol>
             </section>
 
             {/* Medium */}
@@ -261,22 +242,14 @@ aof scan --project "Demo" --mode basic httpx -u https://example.com`}
                         : "Medium is great when you want a balance between simplicity and control. You don't have to write a full pipeline, but you can still tune the scan for your targets."}
                 </Callout>
 
-                <CodeBlock title="bash · POST /scans/medium/submit">
-                    {`curl -X POST https://api.auto-offensive.com/scans/medium/submit \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "project_id": "proj_abc123",
-    "target": "example.com",
-    "tool": "nuclei",
-    "options": {
-      "severity": ["critical", "high"],
-      "templates": ["cves", "exposures"],
-      "rate_limit": 150,
-      "timeout": 10
-    }
-  }'`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ជ្រើសរើស Medium សម្រាប់ scan mode។" : "Select Medium as the scan mode."}</li>
+                    <li>{isKhmer ? "បញ្ចូល target របស់អ្នក។" : "Enter your target."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស tool មួយ (ឧទាហរណ៍ nuclei)។" : "Choose a tool (e.g., nuclei)."}</li>
+                    <li>{isKhmer ? "Form សម្រាប់កំណត់រចនាសម្ព័ន្ធនឹងលេចឡើង។ កែប្រែ options តាម tool (ដូចជា Severity, Rate Limit ជាដើម)។" : "A configuration form will appear. Adjust the tool-specific options (like Severity, Rate Limit, etc.)."}</li>
+                    <li>{isKhmer ? "ចុច Submit Scan។" : "Click Submit Scan."}</li>
+                </ol>
             </section>
 
             {/* Advanced */}
@@ -301,27 +274,13 @@ aof scan --project "Demo" --mode basic httpx -u https://example.com`}
                     )}
                 </Para>
 
-                <CodeBlock title="bash · multi-step recon pipeline">
-                    {`# Find subdomains → probe HTTP → scan vulns
-aof scan --project "Web App" \\
-  "subfinder -d example.com \\| httpx -sc -title \\| nuclei -severity high,critical"
-
-# Network discovery → service detection → directory bruteforce
-aof scan --project "Network" \\
-  "naabu -host example.com -p 80,443 \\| httpx \\| gobuster -w common.txt"`}
-                </CodeBlock>
-
-                <SubHeading>{isKhmer ? "ឧទាហរណ៍ — REST API" : "Example — REST API"}</SubHeading>
-                <CodeBlock title="bash · POST /scans/advanced/submit">
-                    {`curl -X POST https://api.auto-offensive.com/scans/advanced/submit \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "project_id": "proj_abc123",
-    "target": "example.com",
-    "command": "subfinder -d example.com | httpx -sc | nuclei -severity high,critical"
-  }'`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ជ្រើសរើស Advanced សម្រាប់ scan mode។" : "Select Advanced as the scan mode."}</li>
+                    <li>{isKhmer ? "បញ្ចូល target របស់អ្នក។" : "Enter your target."}</li>
+                    <li>{isKhmer ? "នៅក្នុង Pipeline editor បញ្ចូលពាក្យបញ្ជា Unix-style របស់អ្នក (ឧទាហរណ៍ subfinder -d example.com | httpx -sc)។" : "In the Pipeline editor, type your Unix-style command (e.g., subfinder -d example.com | httpx -sc)."}</li>
+                    <li>{isKhmer ? "ចុច Submit Scan។" : "Click Submit Scan."}</li>
+                </ol>
 
                 <Callout type="warn" icon={<AlertTriangle className="text-[#B86800]" />} title={isKhmer ? "ការបញ្ជូន tool-to-tool" : "Tool-to-tool data flow"}>
                     {isKhmer

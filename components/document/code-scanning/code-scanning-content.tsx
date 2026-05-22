@@ -84,39 +84,20 @@ export default function CodeScanningContent() {
                         : "Submit a code scan via REST API or Web UI. The scan targets a specific branch, commit, or pull request."}
                 </Para>
 
-                <CodeBlock title="bash · POST /api/v1/scanner/scans">
-                    {`curl -X POST https://api.auto-offensive.com/api/v1/scanner/scans \\
-  -H "Authorization: Bearer $AOF_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "project_id": "proj_abc123",
-    "repository_url": "https://github.com/acme/web-app",
-    "branch": "main",
-    "scan_dependencies": true
-  }'
-
-# Response
-{
-  "task_ref": "scan_task_456",
-  "status": "STARTED",
-  "queued_at": "2026-05-20T10:00:00Z"
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "របៀបប្រើប្រាស់តាម UI" : "How to use via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅកាន់ទំព័រ 'Code Scanning' ពី sidebar។" : "Navigate to the 'Code Scanning' page from the sidebar."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស Repository របស់អ្នកពីបញ្ជី។" : "Select your Repository from the list."}</li>
+                    <li>{isKhmer ? "ជ្រើសរើស Branch ដែលអ្នកចង់ស្កេន (ឧ. main)។" : "Select the Branch you want to scan (e.g., main)."}</li>
+                    <li>{isKhmer ? "ចុចប៊ូតុង 'Start Scan'។" : "Click the 'Start Scan' button."}</li>
+                </ol>
 
                 <SubHeading>{isKhmer ? "ការតាមដាន progress" : "Track progress"}</SubHeading>
-                <CodeBlock title="bash · status & logs">
-                    {`# Get scan status
-GET /api/v1/scanner/scans/{task_ref}/status
-
-# Stream live logs via SSE
-GET /api/v1/scanner/scans/{task_ref}/logs/stream
-
-# Stop a running scan
-POST /api/v1/scanner/scans/{task_ref}/stop
-
-# Retry a failed scan
-POST /api/v1/scanner/scans/{task_ref}/retry`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ការតាមដានតាម UI" : "Tracking via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "អ្នកនឹងឃើញ Status របស់ការស្កេនផ្លាស់ប្តូរ (Pending -> Running -> Completed)។" : "You will see the scan Status change (Pending -> Running -> Completed)."}</li>
+                    <li>{isKhmer ? "អ្នកអាចចុច 'View Logs' ដើម្បីមើលដំណើរការស្កេនផ្ទាល់។" : "You can click 'View Logs' to watch the live scanning process."}</li>
+                </ol>
             </section>
 
             {/* Issues */}
@@ -140,19 +121,12 @@ POST /api/v1/scanner/scans/{task_ref}/retry`}
                 />
 
                 <SubHeading>{isKhmer ? "ការទាញយក issues" : "Fetching issues"}</SubHeading>
-                <CodeBlock title="bash · list issues">
-                    {`# List all issues
-GET /api/v1/scanner/scans/{task_ref}/issues
-
-# Filter by type and severity
-GET /api/v1/scanner/scans/{task_ref}/issues?type=VULNERABILITY&severity=CRITICAL,BLOCKER
-
-# Get a single issue with history
-GET /api/v1/scanner/scans/{task_ref}/issues/{issue_id}
-
-# File-level issues
-GET /api/v1/scanner/scans/{task_ref}/files/{file_path}/issues`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ការមើលបញ្ហាតាម UI" : "Viewing issues via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "នៅពេលការស្កេនបញ្ចប់ សូមចូលទៅផ្ទាំង 'Issues'។" : "When the scan completes, go to the 'Issues' tab."}</li>
+                    <li>{isKhmer ? "អ្នកអាចប្រើតម្រង (Filter) ដើម្បីរើសមើលតាម Severity (CRITICAL, MAJOR...)។" : "You can use filters to view by Severity (CRITICAL, MAJOR...)."}</li>
+                    <li>{isKhmer ? "ចុចលើបញ្ហានីមួយៗដើម្បីមើលបន្ទាត់កូដនិងវិធីជួសជុល។" : "Click on any issue to see the code line and fix instructions."}</li>
+                </ol>
             </section>
 
             {/* Hotspots */}
@@ -170,13 +144,11 @@ GET /api/v1/scanner/scans/{task_ref}/files/{file_path}/issues`}
                         : 'Hotspots say "show me this," not "I found it." Example: usage of SecureRandom() — not a bug, but worth reviewing to make sure it\'s used correctly.'}
                 </Callout>
 
-                <CodeBlock title="bash · list & review hotspots">
-                    {`# List hotspots
-GET /api/v1/scanner/scans/{task_ref}/hotspots
-
-# Get hotspot detail with line context
-GET /api/v1/scanner/scans/{task_ref}/hotspots/{hotspot_id}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ការពិនិត្យតាម UI" : "Reviewing via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅផ្ទាំង 'Security Hotspots'។" : "Go to the 'Security Hotspots' tab."}</li>
+                    <li>{isKhmer ? "ពិនិត្យមើលចំណុចនីមួយៗ ហើយសម្គាល់ថាវា 'Safe' ឬ 'Vulnerable'។" : "Review each hotspot and mark it as 'Safe' or 'Vulnerable'."}</li>
+                </ol>
             </section>
 
             {/* Dependencies */}
@@ -198,20 +170,12 @@ GET /api/v1/scanner/scans/{task_ref}/hotspots/{hotspot_id}`}
                     ]}
                 />
 
-                <CodeBlock title="bash · dependency results">
-                    {`# Get dependency vulnerability list
-GET /api/v1/scanner/scans/{task_ref}/dependencies
-
-# Get summary of dependency findings
-GET /api/v1/scanner/scans/{task_ref}/dependencies/summary
-
-# Response
-{
-  "total": 12,
-  "by_severity": {"critical": 1, "high": 4, "medium": 5, "low": 2},
-  "outdated_count": 18
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "លទ្ធផលតាម UI" : "Results via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "ចូលទៅផ្ទាំង 'Dependencies'។" : "Go to the 'Dependencies' tab."}</li>
+                    <li>{isKhmer ? "អ្នកនឹងឃើញបញ្ជីកញ្ចប់ (packages) ដែលហួសសម័យឬមានចន្លោះប្រហោង។" : "You will see a list of outdated or vulnerable packages."}</li>
+                    <li>{isKhmer ? "ប្រព័ន្ធនឹងណែនាំ Version ដែលអ្នកគួរអាប់ដេតទៅ។" : "The system will recommend the Version you should update to."}</li>
+                </ol>
             </section>
 
             {/* Quality gates */}
@@ -223,27 +187,11 @@ GET /api/v1/scanner/scans/{task_ref}/dependencies/summary
                         : 'Quality gates are rules that determine if a scan passes or fails. For example: "no CRITICAL vulnerabilities" or "code coverage > 80%". Auto-Offensive reports the quality gate result directly in the scan summary.'}
                 </Para>
 
-                <CodeBlock title="bash · scan summary">
-                    {`GET /api/v1/scanner/scans/{task_ref}/summary
-
-{
-  "task_ref": "scan_task_456",
-  "status": "completed",
-  "quality_gate": "failed",
-  "metrics": {
-    "bugs": 3,
-    "vulnerabilities": 2,
-    "code_smells": 47,
-    "hotspots": 8,
-    "coverage_pct": 76.4,
-    "duplications_pct": 4.2
-  },
-  "failed_conditions": [
-    "vulnerabilities > 0",
-    "coverage < 80%"
-  ]
-}`}
-                </CodeBlock>
+                <SubHeading>{isKhmer ? "ការពិនិត្យតាម UI" : "Checking via UI"}</SubHeading>
+                <ol className="list-decimal pl-5 space-y-2 text-[15px] md:text-[16px] text-[#4A4540] dark:text-[#C9CDD4] mb-6" style={sansFontStyle}>
+                    <li>{isKhmer ? "នៅក្នុងទំព័រសង្ខេប (Summary) អ្នកនឹងឃើញសញ្ញាធំមួយបញ្ជាក់ពី 'Passed' ឬ 'Failed'។" : "In the Summary page, you will see a large badge showing 'Passed' or 'Failed'."}</li>
+                    <li>{isKhmer ? "ប្រសិនបើបរាជ័យ វានឹងរាយបញ្ជីលក្ខខណ្ឌដែលមិនបានបំពេញ (ឧទាហរណ៍: Coverage ទាបពេក)។" : "If it fails, it will list the conditions that were not met (e.g., Coverage too low)."}</li>
+                </ol>
 
                 <Callout type="info" icon={<GitMerge className="text-[#1D57C8]" />} title={isKhmer ? "ការប្រើក្នុង CI/CD" : "Use in CI/CD"}>
                     {isKhmer
